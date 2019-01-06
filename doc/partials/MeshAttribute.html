@@ -1,0 +1,459 @@
+<h1 class="page-title">MeshAttribute</h1>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        MeshAttribute
+        </h2>
+        
+            <div class="class-description">Mesh Attribute</div>
+        
+    
+</header>
+
+
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    <h4 class="name " id="MeshAttribute">new <a href="meshAttribute.js.html#line5">MeshAttribute</a><span class="signature">(name, data, size, type, normalized, usage)</span><span class="type-signature"></span>
+
+    
+
+    </h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Arguments:</h5>
+    
+
+<ol>
+  
+  <li>
+     <code>name</code> <code>(<span class="param-type">String</span>)</code>&nbsp;&nbspattribute name
+     
+  </li>
+  
+  <li>
+     <code>data</code> <code>(<span class="param-type">ArrayBufferView</span>)</code>&nbsp;&nbsptyped array of data for the attribute
+     
+  </li>
+  
+  <li>
+     <code>size</code> <code>(<span class="param-type">Number</span>)</code>&nbsp;&nbspsize of data in array. 2 for vec2, 3 for vec3, etc...
+     
+  </li>
+  
+  <li>
+     <code>type</code> <code>(<span class="param-type">String</span>)</code>&nbsp;&nbspdatatype matching the typed array datatype. 'FLOAT', 'UNSIGNED_BYTE', etc
+     
+  </li>
+  
+  <li>
+     <code>normalized</code> <code>(<span class="param-type">Boolean</span>)</code>&nbsp;&nbspwether the data is normalised to 0-1 range for glsl.
+     
+  </li>
+  
+  <li>
+     <code>usage</code> <code>(<span class="param-type">String</span>)</code>&nbsp;&nbspusage hint for gl. 'STATIC_DRAW' or 'DYNAMIC_DRAW'.
+     
+  </li>
+  
+</ol>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h2 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name " id="bind"><a href="meshAttribute.js.html#line49">bind</a><span class="signature">(gl, program)</span><span class="type-signature"></span>
+
+    
+
+    </h4>
+
+    
+
+
+
+<div class="description">
+    initializes buffer. Internal method. Should not be called manually!
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Arguments:</h5>
+    
+
+<ol>
+  
+  <li>
+     <code>gl</code> <code>(<span class="param-type">WebGLRenderingContext</span>)</code>&nbsp;&nbspgl context.
+     
+  </li>
+  
+  <li>
+     <code>program</code> <code>(<span class="param-type"><a href="ShaderProgram.html">ShaderProgram</a></span>)</code>&nbsp;&nbspshaderProgram instance.
+     
+  </li>
+  
+</ol>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name " id="init"><a href="meshAttribute.js.html#line30">init</a><span class="signature">(gl)</span><span class="type-signature"></span>
+
+    
+
+    </h4>
+
+    
+
+
+
+<div class="description">
+    initializes buffer. Internal method. Should not be called manually!
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Arguments:</h5>
+    
+
+<ol>
+  
+  <li>
+     <code>gl</code> <code>(<span class="param-type">WebGLRenderingContext</span>)</code>&nbsp;&nbspgl context.
+     
+  </li>
+  
+</ol>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name " id="update"><a href="meshAttribute.js.html#line38">update</a><span class="signature">(gl)</span><span class="type-signature"></span>
+
+    
+
+    </h4>
+
+    
+
+
+
+<div class="description">
+    updates buffer data. Internal method. Should not be called manually!
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Arguments:</h5>
+    
+
+<ol>
+  
+  <li>
+     <code>gl</code> <code>(<span class="param-type">WebGLRenderingContext</span>)</code>&nbsp;&nbspgl context.
+     
+  </li>
+  
+</ol>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+<div class="forScrollToTop"></div>

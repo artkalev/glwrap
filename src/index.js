@@ -1,10 +1,12 @@
-import * as vec2 from './gl-matrix/vec2.js';
-import * as vec3 from './gl-matrix/vec3.js';
-import * as vec4 from './gl-matrix/vec4.js';
-import * as mat4 from './gl-matrix/mat4.js';
-export {vec2,vec3,vec4,mat4};
-export * from './bounds.js';
+
+export * from './vec3.js';
+export * from './quat.js';
+export * from './mat4.js';
+export * from './baseTexture2D.js';
 export * from './dataTexture2D.js';
 export * from './texture2D.js';
+export * from './framebuffer2D.js';
 export * from './transform.js';
 export * from './shaderProgram.js';
+export * from './mesh.js';
+export * from './meshAttribute.js';

@@ -1,28 +1,35 @@
-export class DataTexture2D{
+import { BaseTexture2D } from "./baseTexture2D.js";
+
+/**
+ * Draw TypedArray as 2D texture. also used in {@link Framebuffer2D}.
+ * @extends BaseTexture2D
+ */
+export class DataTexture2D extends BaseTexture2D{
+    /**
+     * 
+     * @param {ArrayBufferView} data 
+     * @param {Number} width 
+     * @param {Number} height 
+     * @param {String} internalFormat gl pixel format. default: RGBA
+     * @param {String} sourceFormat   gl pixel format. default: RGBA
+     * @param {String} pixelType      gl pixel type.   default UNSIGNED_BYTE
+     */
     constructor( data, width, height, internalFormat, sourceFormat, pixelType ){
+        super();
         this.data = data;
         this.width = width;
         this.height = height;
         this.internalFormat = internalFormat||'RGBA';
         this.sourceFormat = sourceFormat||'RGBA';
         this.pixelType = pixelType||'UNSIGNED_BYTE';
-        this.texture = null;
-        this.isInitialized = false;
-        this.needsUpdate = false;
-        this.wrapS = 'REPEAT';
-        this.wrapT = 'REPEAT';
-        this.useMipmaps = false;
-        this.magFilter = 'NEAREST';
-        this.minFilter = 'NEAREST';
     }
 
-    init(gl){
-        this.texture = gl.createTexture();
-        this.isInitialized = true;
-    }
-
+    /**
+     * @description Updates webgl texture data and parameters.
+     * @param {WebGLRenderingContext} gl 
+     */
     update(gl){
-        gl.bindTexture(gl.TEXTURE_2D, this.texture);
+        super.update(gl);
         gl.texImage2D(
             gl.TEXTURE_2D, 
             0, 
@@ -33,17 +40,5 @@ export class DataTexture2D{
             gl[this.pixelType], 
             this.data
         );
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl[this.magFilter]);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl[this.minFilter]);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl[this.wrapS]);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl[this.wrapT]);
-        this.needsUpdate = false;
-    }
-
-    setActive(gl, textureUnit){
-        if(!this.isInitialized){this.init(gl);}
-        if(this.needsUpdate){this.update(gl);}
-        gl.activeTexture(gl.TEXTURE0+textureUnit);
-        gl.bindTexture(gl.TEXTURE_2D, this.texture);
     }
 }

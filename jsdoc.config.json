@@ -1,0 +1,18 @@
+{
+    "source":{
+        "include":["./src/", "./README.md"]
+    },
+    "sourceType": "module",
+    "meta": {
+        "title": "glwrap",
+        "description": "glwrap",
+        "keyword": "webgl"
+    },
+    "linenums": true,
+    "opts":{
+        "encoding": "utf8",
+        "recurse":true,
+        "destination":"./doc/",
+        "template":"node_modules/docdash"
+    }
+}

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>transform.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BaseTexture2D.html">BaseTexture2D</a><ul class='methods'><li data-type='method'><a href="BaseTexture2D.html#init">init</a></li><li data-type='method'><a href="BaseTexture2D.html#setActive">setActive</a></li><li data-type='method'><a href="BaseTexture2D.html#update">update</a></li></ul></li><li><a href="DataTexture2D.html">DataTexture2D</a><ul class='methods'><li data-type='method'><a href="DataTexture2D.html#init">init</a></li><li data-type='method'><a href="DataTexture2D.html#setActive">setActive</a></li><li data-type='method'><a href="DataTexture2D.html#update">update</a></li></ul></li><li><a href="Framebuffer2D.html">Framebuffer2D</a><ul class='methods'><li data-type='method'><a href="Framebuffer2D.html#init">init</a></li><li data-type='method'><a href="Framebuffer2D.html#setActive">setActive</a></li><li data-type='method'><a href="Framebuffer2D.html#update">update</a></li></ul></li><li><a href="Mat4.html">Mat4</a><ul class='methods'><li data-type='method'><a href="Mat4.html#copy">copy</a></li><li data-type='method'><a href="Mat4.html#identity">identity</a></li><li data-type='method'><a href="Mat4.html#invert">invert</a></li><li data-type='method'><a href="Mat4.html#multiply">multiply</a></li><li data-type='method'><a href="Mat4.html#perspective">perspective</a></li><li data-type='method'><a href="Mat4.html#trs">trs</a></li><li data-type='method'><a href="Mat4.html#zero">zero</a></li></ul></li><li><a href="Mesh.html">Mesh</a><ul class='methods'><li data-type='method'><a href="Mesh.html#draw">draw</a></li><li data-type='method'><a href="Mesh.html#getAttribute">getAttribute</a></li></ul></li><li><a href="MeshAttribute.html">MeshAttribute</a><ul class='methods'><li data-type='method'><a href="MeshAttribute.html#bind">bind</a></li><li data-type='method'><a href="MeshAttribute.html#init">init</a></li><li data-type='method'><a href="MeshAttribute.html#update">update</a></li></ul></li><li><a href="Quat.html">Quat</a><ul class='methods'><li data-type='method'><a href="Quat.html#multiply">multiply</a></li><li data-type='method'><a href="Quat.html#rotateX">rotateX</a></li><li data-type='method'><a href="Quat.html#rotateY">rotateY</a></li><li data-type='method'><a href="Quat.html#rotateZ">rotateZ</a></li><li data-type='method'><a href="Quat.html#setEuler">setEuler</a></li></ul></li><li><a href="ShaderProgram.html">ShaderProgram</a><ul class='methods'><li data-type='method'><a href="ShaderProgram.html#compile">compile</a></li><li data-type='method'><a href="ShaderProgram.html#use">use</a></li></ul></li><li><a href="Texture2D.html">Texture2D</a><ul class='methods'><li data-type='method'><a href="Texture2D.html#init">init</a></li><li data-type='method'><a href="Texture2D.html#setActive">setActive</a></li><li data-type='method'><a href="Texture2D.html#update">update</a></li></ul></li><li><a href="Transform.html">Transform</a><ul class='methods'><li data-type='method'><a href="Transform.html#addChild">addChild</a></li><li data-type='method'><a href="Transform.html#draw">draw</a></li><li data-type='method'><a href="Transform.html#onBeforeDraw">onBeforeDraw</a></li><li data-type='method'><a href="Transform.html#setParent">setParent</a></li><li data-type='method'><a href="Transform.html#update">update</a></li><li data-type='method'><a href="Transform.html#updateMatrix">updateMatrix</a></li></ul></li><li><a href="Vec3.html">Vec3</a><ul class='methods'><li data-type='method'><a href="Vec3.html#isZero">isZero</a></li><li data-type='method'><a href="Vec3.html#length">length</a></li><li data-type='method'><a href="Vec3.html#lengthSqr">lengthSqr</a></li><li data-type='method'><a href="Vec3.html#normalize">normalize</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">transform.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import {Vec3} from './vec3.js';
+import {Quat} from './quat.js';
+import {Mat4} from './mat4.js';
+import { Mesh } from './mesh.js';
+import { ShaderProgram } from './shaderProgram.js';
+
+/**
+ * This is main class to represent an object with given mesh 
+ * that can be placed into a "world".
+ */
+export class Transform{
+    /**
+     * @param {Mesh} mesh mesh to be assigned to this transform.
+     * @param {ShaderProgram} program shader program to be used while drawing the mesh.
+     */
+    constructor( mesh, program ){
+        /** 
+         * @description a random number assigned at creation.
+         * @name Transform#id
+         * @type {Number}
+         * @readonly
+         */
+        this.id = Math.floor(Math.random()*1000000000);
+        /** 
+         * @description Translation in localSpace. set {@link Transform#matrixNeedsUpdate} true after modifying manually!
+         * @name Transform#localPos
+         * @type {Vec3}
+         */
+        this.localPos = vec3.create();
+        /** 
+         * @description Rotation in localSpace. set {@link Transform#matrixNeedsUpdate} true after modifying manually!
+         * @name Transform#localRot
+         * @type {Quat}
+         */
+        this.localRot = quat.create();
+        /** 
+         * @description Scale in localSpace. set {@link Transform#matrixNeedsUpdate} true after modifying manually!
+         * @name Transform#localScale
+         * @type {Vec3}
+         */
+        this.localScale = vec3.fromValues(1,1,1);
+        /** 
+         * @description transformation from localSpace to world space. This is used as model matrix in glsl.
+         * Calculated from {@link Transform#localPos},{@link Transform#localRot},{@link Transform#localScale}
+         * and {@link Transform#parent} matrix.
+         * if {@link Transform#matrixNeedsUpdate} is true, it will be recalculated at next {@link Transform#update} call.
+         * @name Transform#localToWorld
+         * @type {Mat4}
+         */
+        this.localToWorld = mat4.create();
+        /**
+         * @description transformation from world space to local space. This is just {@link Transform#localToWorld} inverted.
+         * @name Transform#worldToLocal
+         * @type {Mat4}
+         */
+        this.worldToLocal = mat4.create();
+        /**
+         * @description shader program which is used when drawing {@link Transform#mesh}
+         * @name Transform#program
+         * @type {ShaderProgram}
+         */
+        this.program = program;
+        /**
+         * @description optional uniforms for this transform. they will override the uniforms in {@link Transform#program}
+         * @type {Object&lt;String,Uniform>}
+         */
+        this.uniforms = {};
+        /**
+         * @description mesh linked to this transformation.
+         * @name Transform#mesh
+         * @type {Mesh}
+         */
+        this.mesh = mesh;
+        /**
+         * @description parent transformation of this. It will affect the {@link Transform#localToWorld} matrix.
+         * use {@link Transform#setparent} instead of changing this directly.
+         * @name Transform#parent
+         * @type {Transform}
+         * @readonly
+         */
+        this.parent = null;
+        /**
+         * @description children Transforms of this. Use {@link Transform#addChild} instead of changing this directly.
+         * @name Transform#children
+         * @type {Transform[]}
+         * @readonly
+         */
+        this.children = [];
+        /** 
+         * @description if true, {@link Transform#localToWorld} is recalculated at next {@link Transform#update} call.
+         * This avoids recalculation of matrices after every additional transformation.
+         * @name Transform#matrixNeedsUpdate
+         * @type {Boolean}
+         */
+        this.matrixNeedsUpdate = true;
+        /**
+         * @description controls wether this object is rendered or not.
+         * @name Transform#visible
+         * @type {Boolean}
+         */
+        this.visible = true;
+        this.onupdate = function(){};
+    }
+
+    /**
+     * @description sets the parent for this transformation object. This affects the localToWorld and worldToLocal matrices.
+     * @param {Transform} parent new parent.
+     */
+    setParent(parent){
+        this.parent = parent;
+        this.parent.children.push(this);
+        this.matrixNeedsUpdate = true;
+    }
+    /**
+     * @description pushes the transform to this.children. Does nothing when given transform is already a child.
+     * @param {Transform} child new child.
+     */
+    addChild(child){
+        if(this.children.indexOf(child) != -1){return;}
+        if(child.parent != null){
+            child.parent.children.splice(child.parent.children.indexOf(child),1);
+        }
+        children.push(child);
+        child.parent = this;
+        child.matrixNeedsUpdate = true;
+    }
+    /**
+     * @description this should be called from your mainloop implementation before rendering a frame.
+     */
+    update(){
+        this.onupdate();
+        if(this.matrixNeedsUpdate){this.updateMatrix();}
+    }
+
+    /**
+     * @description updates localToWorld and worldToLocal matrices. 
+     * it Is called from {@link Transform#update} if {@link Transform#matrixNeedsUpdate} is true.
+     * Also recursively updates the bounds of this and the parent chain.
+     */
+    updateMatrix(){
+        /* matrix recalculations */
+        this.localToWorld.trs( this.localRot, this.localPos, this.localScale );
+        if(this.parent != null){
+            this.localToWorld.multiply( this.parent.localToWorld );
+        }
+        this.worldToLocal.copy( this.localToWorld );
+        this.worldToLocal.invert();
+        for(let i = 0; i &lt; this.children.length; i++){
+            this.children[i].matrixUpdate = true;
+        }
+        this.matrixNeedsUpdate = false;
+    }
+
+    /**
+     * @description an overridable method to be called before drawing.
+     * @param {WebglRenderingContext} gl gl context
+     */
+    onBeforeDraw(gl){
+        
+    }
+
+    /**
+     * @description main method to draw this.mesh. binds the shaderprogram and assigns uniforms to it.
+     * @param {WebglRenderingContext} gl gl context
+     * @param {Float32Array} viewMatrix viewMatrix to be used by the shaderProgram. if null then identity matrix is used
+     * @param {Float32Array} projectionMatrix projection matrix to be used by the shader program. if null identity matrix is used
+     */
+    draw(gl, viewMatrix, projectionMatrix){
+        if(!this.visible){return;}
+        if(this.program == null){return;}
+        if(this.mesh == null){return;}
+        this.onBeforeDraw();
+        this.program.use(gl);
+        if(!viewMatrix){
+            this.program.setUniform(gl, 'u_viewMatrix', 'm4', identityMatrix);
+        }else{
+            this.program.setUniform(gl, 'u_viewMatrix', 'm4', viewMatrix);
+        }
+        if(!projectionMatrix){
+            this.program.setUniform(gl, 'u_projMatrix', 'm4', identityMatrix);
+        }else{
+            this.program.setUniform(gl, 'u_projMatrix', 'm4', projectionMatrix);
+        }
+        this.program.setUniform(gl, 'u_modelMatrix', 'm4', this.localToWorld);
+        for(let name in this.uniforms){
+            this.program.setUniform(gl,name,this.uniforms[name].type, this.uniforms[name].value);
+        }
+        this.mesh.draw(gl, this.program);
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jan 04 2019 08:58:06 GMT+0200 (EET) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,1115 @@
+<h1 class="page-title">ShaderProgram</h1>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        ShaderProgram
+        </h2>
+        
+            <div class="class-description">Compiles vertex shader, fragment shader and the gl program.<br>
+Applies blending modes, depth sort modes and face culling modes.<br>
+stores a set of its own uniforms as well.</div>
+        
+    
+</header>
+
+
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    <h4 class="name " id="ShaderProgram">new <a href="shaderProgram.js.html#line23">ShaderProgram</a><span class="signature">(vertexSource, fragmentSource, uniforms)</span><span class="type-signature"></span>
+
+    
+
+    </h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Arguments:</h5>
+    
+
+<ol>
+  
+  <li>
+     <code>vertexSource</code> <code>(<span class="param-type">String</span>)</code>&nbsp;&nbspvertex shader glsl string
+     
+  </li>
+  
+  <li>
+     <code>fragmentSource</code> <code>(<span class="param-type">String</span>)</code>&nbsp;&nbspvertex shader glsl string
+     
+  </li>
+  
+  <li>
+     <code>uniforms</code> <code>(<span class="param-type">Object.&lt;String, <a href="global.html#Uniform">Uniform</a>></span>)</code>&nbsp;&nbsp(optional) uniforms for this program.
+     
+  </li>
+  
+</ol>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h2 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="attributeLocations"><a href="shaderProgram.js.html#line77">attributeLocations</a><span class="type-signature">: Object.&lt;string, number></span>
+
+   <span class="member-attr readonly">readonly</span>
+
+</h4>
+
+
+
+
+<div class="description">
+    cache for attribute locations to avoid looking them up by webgl every time
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="cullFace"><a href="shaderProgram.js.html#line101">cullFace</a><span class="type-signature">: String</span>
+
+</h4>
+
+
+
+
+<div class="description">
+    Face culling mode
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>'BACK'</li>
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="depthFunc"><a href="shaderProgram.js.html#line89">depthFunc</a><span class="type-signature">: String</span>
+
+</h4>
+
+
+
+
+<div class="description">
+    Depth sorting function
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>'LEQUAL'</li>
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="enableCulling"><a href="shaderProgram.js.html#line95">enableCulling</a><span class="type-signature">: Boolean</span>
+
+</h4>
+
+
+
+
+<div class="description">
+    Enable or disable gl.CULL_FACE
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>true</li>
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="enableDepth"><a href="shaderProgram.js.html#line83">enableDepth</a><span class="type-signature">: Boolean</span>
+
+</h4>
+
+
+
+
+<div class="description">
+    Enable or disable gl.DEPTH_SORT feature
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>true</li>
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="fragmentShader"><a href="shaderProgram.js.html#line49">fragmentShader</a><span class="type-signature">: WebGLShader</span>
+
+</h4>
+
+
+
+
+<div class="description">
+    gl shader object
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="fragmentSource"><a href="shaderProgram.js.html#line39">fragmentSource</a><span class="type-signature">: String</span>
+
+</h4>
+
+
+
+
+<div class="description">
+    glsl source code for fragment shader
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="isCompiled"><a href="shaderProgram.js.html#line108">isCompiled</a><span class="type-signature">: Boolean</span>
+
+   <span class="member-attr readonly">readonly</span>
+
+</h4>
+
+
+
+
+<div class="description">
+    used internally to check if shaders have been compiled yet
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="program"><a href="shaderProgram.js.html#line54">program</a><span class="type-signature">: WebGLProgram</span>
+
+</h4>
+
+
+
+
+<div class="description">
+    gl program object
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="textureUnit"><a href="shaderProgram.js.html#line60">textureUnit</a><span class="type-signature">: Number</span>
+
+   <span class="member-attr readonly">readonly</span>
+
+</h4>
+
+
+
+
+<div class="description">
+    Used internally to keep track of texture units while assigning texture uniforms.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="uniformLocations"><a href="shaderProgram.js.html#line71">uniformLocations</a><span class="type-signature">: Object.&lt;String, number></span>
+
+   <span class="member-attr readonly">readonly</span>
+
+</h4>
+
+
+
+
+<div class="description">
+    cache for uniforms locations to avoid looking them up by webgl every time
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="uniforms"><a href="shaderProgram.js.html#line65">uniforms</a><span class="type-signature">: Object.&lt;String, <a href="global.html#Uniform">Uniform</a>></span>
+
+</h4>
+
+
+
+
+<div class="description">
+    uniforms for this shader program
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="vertexShader"><a href="shaderProgram.js.html#line44">vertexShader</a><span class="type-signature">: WebGLShader</span>
+
+</h4>
+
+
+
+
+<div class="description">
+    gl shader object
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="vertexSource"><a href="shaderProgram.js.html#line34">vertexSource</a><span class="type-signature">: String</span>
+
+</h4>
+
+
+
+
+<div class="description">
+    glsl source code for vertex shader
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+        <h2 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name " id="compile"><a href="shaderProgram.js.html#line118">compile</a><span class="signature">(gl)</span><span class="type-signature"></span>
+
+    
+
+    </h4>
+
+    
+
+
+
+<div class="description">
+    Creates webgl shader and program objects.<br>
+Assigns shader sources to them.<br>
+Compiles shaders, attaches them to program and links the program.<br>
+<br>
+This is called from ShaderProgram#use if <a href="ShaderProgram.html#isCompiled">ShaderProgram#isCompiled</a> is false.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Arguments:</h5>
+    
+
+<ol>
+  
+  <li>
+     <code>gl</code> <code>(<span class="param-type">WebGLRenderingContext</span>)</code>
+     
+  </li>
+  
+</ol>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+<div class="forScrollToTop"></div>

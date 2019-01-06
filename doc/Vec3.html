@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>Vec3 - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BaseTexture2D.html">BaseTexture2D</a><ul class='methods'><li data-type='method'><a href="BaseTexture2D.html#init">init</a></li><li data-type='method'><a href="BaseTexture2D.html#setActive">setActive</a></li><li data-type='method'><a href="BaseTexture2D.html#update">update</a></li></ul></li><li><a href="DataTexture2D.html">DataTexture2D</a><ul class='methods'><li data-type='method'><a href="DataTexture2D.html#init">init</a></li><li data-type='method'><a href="DataTexture2D.html#setActive">setActive</a></li><li data-type='method'><a href="DataTexture2D.html#update">update</a></li></ul></li><li><a href="Framebuffer2D.html">Framebuffer2D</a><ul class='methods'><li data-type='method'><a href="Framebuffer2D.html#init">init</a></li><li data-type='method'><a href="Framebuffer2D.html#setActive">setActive</a></li><li data-type='method'><a href="Framebuffer2D.html#update">update</a></li></ul></li><li><a href="Mat4.html">Mat4</a><ul class='methods'><li data-type='method'><a href="Mat4.html#copy">copy</a></li><li data-type='method'><a href="Mat4.html#identity">identity</a></li><li data-type='method'><a href="Mat4.html#invert">invert</a></li><li data-type='method'><a href="Mat4.html#multiply">multiply</a></li><li data-type='method'><a href="Mat4.html#perspective">perspective</a></li><li data-type='method'><a href="Mat4.html#trs">trs</a></li><li data-type='method'><a href="Mat4.html#zero">zero</a></li></ul></li><li><a href="Mesh.html">Mesh</a><ul class='methods'><li data-type='method'><a href="Mesh.html#draw">draw</a></li><li data-type='method'><a href="Mesh.html#getAttribute">getAttribute</a></li></ul></li><li><a href="MeshAttribute.html">MeshAttribute</a><ul class='methods'><li data-type='method'><a href="MeshAttribute.html#bind">bind</a></li><li data-type='method'><a href="MeshAttribute.html#init">init</a></li><li data-type='method'><a href="MeshAttribute.html#update">update</a></li></ul></li><li><a href="Quat.html">Quat</a><ul class='methods'><li data-type='method'><a href="Quat.html#multiply">multiply</a></li><li data-type='method'><a href="Quat.html#rotateX">rotateX</a></li><li data-type='method'><a href="Quat.html#rotateY">rotateY</a></li><li data-type='method'><a href="Quat.html#rotateZ">rotateZ</a></li><li data-type='method'><a href="Quat.html#setEuler">setEuler</a></li></ul></li><li><a href="ShaderProgram.html">ShaderProgram</a><ul class='methods'><li data-type='method'><a href="ShaderProgram.html#compile">compile</a></li><li data-type='method'><a href="ShaderProgram.html#use">use</a></li></ul></li><li><a href="Texture2D.html">Texture2D</a><ul class='methods'><li data-type='method'><a href="Texture2D.html#init">init</a></li><li data-type='method'><a href="Texture2D.html#setActive">setActive</a></li><li data-type='method'><a href="Texture2D.html#update">update</a></li></ul></li><li><a href="Transform.html">Transform</a><ul class='methods'><li data-type='method'><a href="Transform.html#addChild">addChild</a></li><li data-type='method'><a href="Transform.html#draw">draw</a></li><li data-type='method'><a href="Transform.html#onBeforeDraw">onBeforeDraw</a></li><li data-type='method'><a href="Transform.html#setParent">setParent</a></li><li data-type='method'><a href="Transform.html#update">update</a></li><li data-type='method'><a href="Transform.html#updateMatrix">updateMatrix</a></li></ul></li><li><a href="Vec3.html">Vec3</a><ul class='methods'><li data-type='method'><a href="Vec3.html#isZero">isZero</a></li><li data-type='method'><a href="Vec3.html#length">length</a></li><li data-type='method'><a href="Vec3.html#lengthSqr">lengthSqr</a></li><li data-type='method'><a href="Vec3.html#normalize">normalize</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Vec3</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        Vec3
+        </h2>
+        
+            <div class="class-description">3D vector class</div>
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+
+    
+    <h2>Constructor</h2>
+    
+
+    <h4 class="name" id="Vec3"><span class="type-signature"></span>new Vec3<span class="signature">(x, y, z)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="vec3.js.html">vec3.js</a>, <a href="vec3.js.html#line4">line 4</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Creates new 3D Vector from parameters.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>z</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        </div>
+    
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="data"><span class="type-signature"></span>data<span class="type-signature"> :Float32Array</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="vec3.js.html">vec3.js</a>, <a href="vec3.js.html#line17">line 17</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    a float array storing the components of the vector.
+this can be passed to <a href="ShaderProgram.html">ShaderProgram</a> as an uniform.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Float32Array</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="isZero"><span class="type-signature"></span>isZero<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="vec3.js.html">vec3.js</a>, <a href="vec3.js.html#line53">line 53</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Returns true if all components are zero.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="length"><span class="type-signature"></span>length<span class="signature">()</span><span class="type-signature"> &rarr; {number}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="vec3.js.html">vec3.js</a>, <a href="vec3.js.html#line37">line 37</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Length of the vector.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    length
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="lengthSqr"><span class="type-signature"></span>lengthSqr<span class="signature">()</span><span class="type-signature"> &rarr; {number}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="vec3.js.html">vec3.js</a>, <a href="vec3.js.html#line30">line 30</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Squared length of this vector. this is cheaper than <a href="Vec3.html#length">Vec3#length</a>.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    squared length.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="normalize"><span class="type-signature"></span>normalize<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="vec3.js.html">vec3.js</a>, <a href="vec3.js.html#line43">line 43</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Normalizes the vector by dividing it by its own length. This ensures that the length is always one.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jan 04 2019 08:58:06 GMT+0200 (EET) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+
+
+</body>
+</html>

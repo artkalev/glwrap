@@ -1,0 +1,1173 @@
+<h1 class="page-title">Texture2D</h1>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        Texture2D
+        </h2>
+        
+            <div class="class-description">This class is intended to only display loaded images.
+For displaying data buffers use <a href="DataTexture2D.html">DataTexture2D</a>.</div>
+        
+    
+</header>
+
+
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    <h4 class="name " id="Texture2D">new <a href="texture2D.js.html#line8">Texture2D</a><span class="signature">(url)</span><span class="type-signature"></span>
+
+    
+
+    </h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Arguments:</h5>
+    
+
+<ol>
+  
+  <li>
+     <code>url</code> <code>(<span class="param-type">String</span>)</code>&nbsp;&nbsppath to image to load.
+     
+  </li>
+  
+</ol>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="BaseTexture2D.html">BaseTexture2D</a></li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h2 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="internalFormat"><a href="baseTexture2D.js.html#line19">internalFormat</a><span class="type-signature">: String</span>
+
+</h4>
+
+
+
+
+<div class="description">
+    internal pixel format for webgl.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="BaseTexture2D.html#internalFormat">BaseTexture2D#internalFormat</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>'RGBA'</li>
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Constants#Pixel_formats">https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Constants#Pixel_formats</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="magFilter"><a href="baseTexture2D.js.html#line69">magFilter</a><span class="type-signature"></span>
+
+</h4>
+
+
+
+
+<div class="description">
+    GL magnification filtering. Affects how a texel is rendered if it is bigger than screen pixel.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dd><ul class="dummy"><li>
+        <a href="BaseTexture2D.html#magFilter" class="inherited-from">BaseTexture2D#magFilter</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>'NEAREST'</li>
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Constants#Textures">https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Constants#Textures</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="minFilter"><a href="baseTexture2D.js.html#line75">minFilter</a><span class="type-signature"></span>
+
+</h4>
+
+
+
+
+<div class="description">
+    GL minification filtering. Affects how a texel is rendered if it is smaller than screen pixel.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dd><ul class="dummy"><li>
+        <a href="BaseTexture2D.html#minFilter" class="inherited-from">BaseTexture2D#minFilter</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>'NEAREST'</li>
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Constants#Textures">https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Constants#Textures</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="needsUpdate"><a href="baseTexture2D.js.html#line44">needsUpdate</a><span class="type-signature">: Boolean</span>
+
+</h4>
+
+
+
+
+<div class="description">
+    if true webgl texture object is updated the next time <a href="BaseTexture2D.html#setActive">BaseTexture2D#setActive</a> is called.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dd><ul class="dummy"><li>
+        <a href="BaseTexture2D.html#needsUpdate" class="inherited-from">BaseTexture2D#needsUpdate</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="pixelType"><a href="baseTexture2D.js.html#line33">pixelType</a><span class="type-signature">: String</span>
+
+</h4>
+
+
+
+
+<div class="description">
+    pixel data type.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="BaseTexture2D.html#pixelType">BaseTexture2D#pixelType</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>'UNSIGNED_BYTE'</li>
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Constants#Pixel_types">https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Constants#Pixel_types</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="sourceFormat"><a href="baseTexture2D.js.html#line26">sourceFormat</a><span class="type-signature">: String</span>
+
+</h4>
+
+
+
+
+<div class="description">
+    source pixel format for webgl. (same as <a href="BaseTexture2D.html#internalFormat">BaseTexture2D#internalFormat</a> for WebGL1).
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="BaseTexture2D.html#sourceFormat">BaseTexture2D#sourceFormat</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>'RGBA'</li>
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Constants#Pixel_formats">https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Constants#Pixel_formats</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="texture"><a href="baseTexture2D.js.html#line38">texture</a><span class="type-signature">: WebGLTexture</span>
+
+</h4>
+
+
+
+
+<div class="description">
+    webgl texture object. This will be created by <a href="BaseTexture2D.html#init">BaseTexture2D#init</a>.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dd><ul class="dummy"><li>
+        <a href="BaseTexture2D.html#texture" class="inherited-from">BaseTexture2D#texture</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="useMipmaps"><a href="baseTexture2D.js.html#line63">useMipmaps</a><span class="type-signature">: Boolean</span>
+
+</h4>
+
+
+
+
+<div class="description">
+    wether to create mipmaps on next update.
+mipmapping only works on power of 2 sized textures!
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dd><ul class="dummy"><li>
+        <a href="BaseTexture2D.html#useMipmaps" class="inherited-from">BaseTexture2D#useMipmaps</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>false</li>
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="wrapS"><a href="baseTexture2D.js.html#line50">wrapS</a><span class="type-signature">: String</span>
+
+</h4>
+
+
+
+
+<div class="description">
+    GL Wrapping on S coordinate.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dd><ul class="dummy"><li>
+        <a href="BaseTexture2D.html#wrapS" class="inherited-from">BaseTexture2D#wrapS</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>'REPEAT'</li>
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="wrapT"><a href="baseTexture2D.js.html#line56">wrapT</a><span class="type-signature">: String</span>
+
+</h4>
+
+
+
+
+<div class="description">
+    GL Wrapping on T coordinate.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dd><ul class="dummy"><li>
+        <a href="BaseTexture2D.html#wrapT" class="inherited-from">BaseTexture2D#wrapT</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>'REPEAT'</li>
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+        <h2 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name " id="init"><a href="baseTexture2D.js.html#line81">init</a><span class="signature">(gl)</span><span class="type-signature"></span>
+
+    
+
+    </h4>
+
+    
+
+
+
+<div class="description">
+    Creates the WebGLTexture instance. There is no need to call this manually in most cases. It is called from <a href="BaseTexture2D.html#setActive">BaseTexture2D#setActive</a> if needed.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Arguments:</h5>
+    
+
+<ol>
+  
+  <li>
+     <code>gl</code> <code>(<span class="param-type">WebGLRenderingContext</span>)</code>
+     
+  </li>
+  
+</ol>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dd><ul class="dummy"><li>
+        <a href="BaseTexture2D.html#init" class="inherited-from">BaseTexture2D#init</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name " id="setActive"><a href="baseTexture2D.js.html#line106">setActive</a><span class="signature">(gl, textureUnit)</span><span class="type-signature"></span>
+
+    
+
+    </h4>
+
+    
+
+
+
+<div class="description">
+    Initializes and updates this texture if necessary and then binds it to given texture unit.
+This is used internally when <a href="ShaderProgram.html">ShaderProgram</a> sets a texture uniform.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Arguments:</h5>
+    
+
+<ol>
+  
+  <li>
+     <code>gl</code> <code>(<span class="param-type">WebGLRenderingContext</span>)</code>
+     
+  </li>
+  
+  <li>
+     <code>textureUnit</code> <code>(<span class="param-type">Number</span>)</code>
+     
+  </li>
+  
+</ol>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dd><ul class="dummy"><li>
+        <a href="BaseTexture2D.html#setActive" class="inherited-from">BaseTexture2D#setActive</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name " id="update"><a href="texture2D.js.html#line31">update</a><span class="signature">(gl)</span><span class="type-signature"></span>
+
+    
+
+    </h4>
+
+    
+
+
+
+<div class="description">
+    Updates webgl texture data and parameters.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Arguments:</h5>
+    
+
+<ol>
+  
+  <li>
+     <code>gl</code> <code>(<span class="param-type">WebGLRenderingContext</span>)</code>
+     
+  </li>
+  
+</ol>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="BaseTexture2D.html#update">BaseTexture2D#update</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+<div class="forScrollToTop"></div>

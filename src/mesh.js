@@ -1,88 +1,68 @@
-import { ShaderProgram } from "./shaderProgram.js";
-import { Bounds } from "./bounds.js";
-import * as vec3 from './gl-matrix/vec3.js';
+import {MeshAttribute} from './meshAttribute.js';
 
-export class MeshAttribute{
-    /**
-     * 
-     * @param {String} name attribute name
-     * @param {ArrayBufferView} data typed array of data for the attribute
-     * @param {Number} size size of data in array. 2 for vec2, 3 for vec3, etc...
-     * @param {String} type datatype matching the typed array datatype. 'FLOAT', 'UNSIGNED_BYTE', etc
-     * @param {Boolean} normalized wether the data is normalised to 0-1 range for glsl.
-     * @param {String} usage usage hint for gl. 'STATIC_DRAW' or 'DYNAMIC_DRAW'.
-     */
-    constructor(name, data, size, type, normalized, usage){
-        this.name = name;
-        this.data = data;
-        this.size = size || 3;
-        this.type = type || 'FLOAT';
-        this.usage = usage || 'STATIC_DRAW';
-        this.normalized = normalized || false;
-        this.buffer = null;
-        this.needsUpdate = true;
-        this.isInitialized = false;
-    }
-    /**
-     * @description initializes buffer. Internal method. Should not be called manually!
-     * @param {WebGLRenderingContext} gl gl context. 
-     */
-    init(gl){
-        this.buffer = gl.createBuffer();
-        this.isInitialized = true;
-    }
-    /**
-     * @description updates buffer data. Internal method. Should not be called manually!
-     * @param {WebGLRenderingContext} gl gl context. 
-     */
-    update(gl){
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer);
-        gl.bufferData(gl.ARRAY_BUFFER, this.data, gl[this.usage]);
-        gl.bindBuffer(gl.ARRAY_BUFFER, null);
-        this.needsUpdate = false;
-    }
-    /**
-     * @description initializes buffer. Internal method. Should not be called manually!
-     * @param {WebGLRenderingContext} gl gl context.
-     * @param {ShaderProgram} program shaderProgram instance.
-     */
-    bind(gl, program){
-        var loc = program.getAttributeLocation(gl, this.name);
-        if(loc == -1){return;}
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer);
-        gl.vertexAttribPointer(loc, this.size, gl[this.type], this.normalized, 0, 0);
-        gl.enableVertexAttribArray(loc);
-    }
-}
-
+/**
+ * Flexible geometry class to draw things with webgl.
+ * Different meshes can even share {@link MeshAttribute} objects<br>
+ * provided that the vertexCount matches.
+ * @example
+ * // creating a 2D triangle mesh with position and uv attributes.
+ * let position = new MeshAttribute(
+ *      "position", // name
+ *      new Float32Array([-1.0,-1.0, 0.0,1.0, 1.0,-1.0]), // data
+ *      2, // size per vertex (2D vector in this case)
+ *      'FLOAT', // data type
+ *      false // is data normalized in glsl
+ * );
+ * let uv = new MeshAttribute(
+ *      "uv",
+ *      new Uint8Array([0,0, 128,255, 255,0]),
+ *      2,
+ *      'UNSIGNED_BYTE',
+ *      true
+ * );
+ * let mesh = new Mesh([position, uv]);
+ * mesh.draw(gl, program); // program must have uniforms set before drawing!
+ */
 export class Mesh{
     /**
      * 
      * @param {MeshAttribute[]} attributes attributes for this mesh. must contain an attribute named: 'position'.
      */
     constructor( attributes ){
+        /**
+         * Mesh Attributes
+         * @type {MeshAttribute[]}
+         */
         this.attributes = attributes;
+        /**
+         * Vertex count for this mesh. This is calculated from an attribute named "position"<br>which MUST be present in the attributes array.
+         * @type {Number}
+         * @readonly
+         */
         this.vertexCount = 0;
-        this.bounds = new Bounds();
-        this.calculateBounds();
+        /** 
+         * Drawing mode of the mesh
+         * @type {String}
+         * @default 'TRIANGLES'
+         * @see https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Constants#Rendering_primitives
+         */
         this.drawMode = 'TRIANGLES';
     }
+    /**
+     * Returns a mesh attribute by name
+     * @param {String} name
+     * @returns {MeshAttribute} attribute
+     */
     getAttribute(name){
         for(let i = 0; i < this.attributes.length; i++){
             if(this.attributes[i].name == name){return this.attributes[i];}
         }
     }
-    calculateBounds(){
-        let positions = this.getAttribute('position');
-        if(!positions){return;}
-        let min = vec3.create();
-        let max = vec3.create();
-        for(let i = 0; i < positions.data.length; i+=3){
-            vec3.min(min, min, [positions.data[i],positions.data[i+1],positions.data[i+2]]);
-            vec3.max(max, max, [positions.data[i],positions.data[i+1],positions.data[i+2]]);
-        }
-        this.bounds.setMinMax( min, max );
-    }
+    /**
+     * Binds all attributes and draws the mesh.
+     * @param {WebGLRenderingContext} gl 
+     * @param {ShaderProgram} program 
+     */
     draw(gl, program){
         for(let i = 0; i < this.attributes.length; i++){
             let a = this.attributes[i];

@@ -1,66 +1,119 @@
-import * as mat4 from './gl-matrix/mat4.js';
-import * as vec3 from './gl-matrix/vec3.js';
-import * as quat from './gl-matrix/quat.js';
+import {Vec3} from './vec3.js';
+import {Quat} from './quat.js';
+import {Mat4} from './mat4.js';
 import { Mesh } from './mesh.js';
 import { ShaderProgram } from './shaderProgram.js';
-import { Bounds } from './bounds.js';
 
-const identityMatrix = mat4.create();
-
+/**
+ * This is main class to represent an object with given mesh 
+ * that can be placed into a "world".
+ */
 export class Transform{
     /**
-     * @description standard 3D object transformation representation. only rendered if both program and mesh has been assigned.
      * @param {Mesh} mesh mesh to be assigned to this transform.
      * @param {ShaderProgram} program shader program to be used while drawing the mesh.
      */
     constructor( mesh, program ){
+        /** 
+         * @description a random number assigned at creation.
+         * @name Transform#id
+         * @type {Number}
+         * @readonly
+         */
         this.id = Math.floor(Math.random()*1000000000);
-        this.localPos = vec3.create();
-        this.localRot = quat.create();
-        this.localScale = vec3.fromValues(1,1,1);
-        this.localToWorld = mat4.create();
-        this.worldToLocal = mat4.create();
-        this.bounds = new Bounds();
+        /** 
+         * @description Translation in localSpace. set {@link Transform#matrixNeedsUpdate} true after modifying manually!
+         * @name Transform#localPos
+         * @type {Vec3}
+         */
+        this.localPos = new Vec3();
+        /** 
+         * @description Rotation in localSpace. set {@link Transform#matrixNeedsUpdate} true after modifying manually!
+         * @name Transform#localRot
+         * @type {Quat}
+         */
+        this.localRot = new Quat();
+        /** 
+         * @description Scale in localSpace. set {@link Transform#matrixNeedsUpdate} true after modifying manually!
+         * @name Transform#localScale
+         * @type {Vec3}
+         */
+        this.localScale = new Vec3(1,1,1);
+        /** 
+         * @description transformation from localSpace to world space. This is used as model matrix in glsl.
+         * Calculated from {@link Transform#localPos},{@link Transform#localRot},{@link Transform#localScale}
+         * and {@link Transform#parent} matrix.
+         * if {@link Transform#matrixNeedsUpdate} is true, it will be recalculated at next {@link Transform#update} call.
+         * @name Transform#localToWorld
+         * @type {Mat4}
+         */
+        this.localToWorld = new Mat4();
+        /**
+         * @description transformation from world space to local space. This is just {@link Transform#localToWorld} inverted.
+         * @name Transform#worldToLocal
+         * @type {Mat4}
+         */
+        this.worldToLocal = new Mat4();
+        /**
+         * @description shader program which is used when drawing {@link Transform#mesh}
+         * @name Transform#program
+         * @type {ShaderProgram}
+         */
         this.program = program;
         /**
-         * @description object uniforms overriding shader program uniforms.
-         * this enables to set different uniforms per object.
-         * for example to fade object in/out.
+         * @description optional uniforms for this transform. they will override the uniforms in {@link Transform#program}
+         * @type {Object<String,Uniform>}
          */
         this.uniforms = {};
+        /**
+         * @description mesh linked to this transformation.
+         * @name Transform#mesh
+         * @type {Mesh}
+         */
         this.mesh = mesh;
+        /**
+         * @description parent transformation of this. It will affect the {@link Transform#localToWorld} matrix.
+         * use {@link Transform#setparent} instead of changing this directly.
+         * @name Transform#parent
+         * @type {Transform}
+         * @readonly
+         */
         this.parent = null;
+        /**
+         * @description children Transforms of this. Use {@link Transform#addChild} instead of changing this directly.
+         * @name Transform#children
+         * @type {Transform[]}
+         * @readonly
+         */
         this.children = [];
-        this.matrixUpdate = true;
+        /** 
+         * @description if true, {@link Transform#localToWorld} is recalculated at next {@link Transform#update} call.
+         * This avoids recalculation of matrices after every additional transformation.
+         * @name Transform#matrixNeedsUpdate
+         * @type {Boolean}
+         */
+        this.matrixNeedsUpdate = true;
+        /**
+         * @description controls wether this object is rendered or not.
+         * @name Transform#visible
+         * @type {Boolean}
+         */
         this.visible = true;
         this.onupdate = function(){};
     }
 
-    rotateX(deg){
-        quat.rotateX(this.localRot, this.localRot, deg);
-        this.matrixUpdate = true;
-    }
-    rotateY(deg){
-        quat.rotateY(this.localRot, this.localRot, deg);
-        this.matrixUpdate = true;
-    }
-    rotateZ(deg){
-        quat.rotateZ(this.localRot, this.localRot, deg);
-        this.matrixUpdate = true;
-    }
-
     /**
      * @description sets the parent for this transformation object. This affects the localToWorld and worldToLocal matrices.
-     * @param {Transform} parent 
+     * @param {Transform} parent new parent.
      */
     setParent(parent){
         this.parent = parent;
         this.parent.children.push(this);
-        this.matrixUpdate = true;
+        this.matrixNeedsUpdate = true;
     }
     /**
      * @description pushes the transform to this.children. Does nothing when given transform is already a child.
-     * @param {Transform} child 
+     * @param {Transform} child new child.
      */
     addChild(child){
         if(this.children.indexOf(child) != -1){return;}
@@ -69,46 +122,33 @@ export class Transform{
         }
         children.push(child);
         child.parent = this;
-        child.matrixUpdate = true;
+        child.matrixNeedsUpdate = true;
     }
     /**
      * @description this should be called from your mainloop implementation before rendering a frame.
      */
     update(){
         this.onupdate();
-        if(this.matrixUpdate){this.updateMatrix();}
-    }
-
-    updateBounds(){
-        if(this.mesh != null){
-            this.bounds.fromBoundsWithMatrix(this.mesh.bounds, this.localToWorld);
-        }
-        for(let i = 0; i < this.children.length; i++){
-            this.bounds.extendToBounds(this.children[i].bounds);
-        }
-        if(this.parent != null){
-            this.parent.updateBounds();
-        }
+        if(this.matrixNeedsUpdate){this.updateMatrix();}
     }
 
     /**
      * @description updates localToWorld and worldToLocal matrices. 
-     * it Is called automaticalli from update() if this.needsUpdate is true.
+     * it Is called from {@link Transform#update} if {@link Transform#matrixNeedsUpdate} is true.
      * Also recursively updates the bounds of this and the parent chain.
      */
     updateMatrix(){
         /* matrix recalculations */
-        mat4.fromRotationTranslationScale(this.localToWorld, this.localRot, this.localPos, this.localScale);
+        this.localToWorld.trs( this.localPos, this.localRot, this.localScale );
         if(this.parent != null){
-            mat4.multiply(this.localToWorld, this.parent.localToWorld, this.localToWorld);
+            this.localToWorld.multiply( this.parent.localToWorld );
         }
-        mat4.invert(this.worldToLocal, this.localToWorld);
-        /* recalculating bounds */
-        this.updateBounds();
+        this.worldToLocal.copy( this.localToWorld );
+        this.worldToLocal.invert();
         for(let i = 0; i < this.children.length; i++){
-            this.children[i].matrixUpdate = true;
+            this.children[i].matrixNeedsUpdate = true;
         }
-        this.matrixUpdate = false;
+        this.matrixNeedsUpdate = false;
     }
 
     /**
@@ -131,17 +171,10 @@ export class Transform{
         if(this.mesh == null){return;}
         this.onBeforeDraw();
         this.program.use(gl);
-        if(!viewMatrix){
-            this.program.setUniform(gl, 'u_viewMatrix', 'm4', identityMatrix);
-        }else{
-            this.program.setUniform(gl, 'u_viewMatrix', 'm4', viewMatrix);
-        }
-        if(!projectionMatrix){
-            this.program.setUniform(gl, 'u_projMatrix', 'm4', identityMatrix);
-        }else{
-            this.program.setUniform(gl, 'u_projMatrix', 'm4', projectionMatrix);
-        }
-        this.program.setUniform(gl, 'u_modelMatrix', 'm4', this.localToWorld);
+        this.program.setUniform(gl, 'viewMatrix', 'm4', viewMatrix.data);
+        this.program.setUniform(gl, 'projMatrix', 'm4', projectionMatrix.data);
+        
+        this.program.setUniform(gl, 'modelMatrix', 'm4', this.localToWorld.data);
         for(let name in this.uniforms){
             this.program.setUniform(gl,name,this.uniforms[name].type, this.uniforms[name].value);
         }

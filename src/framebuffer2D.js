@@ -1,5 +1,8 @@
 import { DataTexture2D } from "./dataTexture2D.js";
-
+/**
+ * Contains color and depth rendering target buffers for WebGL.
+ * Essential for render-to-texture implementations.
+ */
 export class Framebuffer2D{
     /**
      * @param {Number} width width of the framebuffer in pixels
@@ -45,7 +48,7 @@ export class Framebuffer2D{
         this.isInitialized = true;
     }
     /**
-     * @description updates buffers. internal method, this should not be called manually!
+     * @description updates buffers. Automatically called by this.setActive() if needsUpdate == true
      * @param {WebGLRenderingContext} gl gl context
      */
     update(gl){
