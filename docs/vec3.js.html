@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>vec3.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BaseTexture2D.html">BaseTexture2D</a><ul class='methods'><li data-type='method'><a href="BaseTexture2D.html#init">init</a></li><li data-type='method'><a href="BaseTexture2D.html#setActive">setActive</a></li><li data-type='method'><a href="BaseTexture2D.html#update">update</a></li></ul></li><li><a href="DataTexture2D.html">DataTexture2D</a><ul class='methods'><li data-type='method'><a href="DataTexture2D.html#init">init</a></li><li data-type='method'><a href="DataTexture2D.html#setActive">setActive</a></li><li data-type='method'><a href="DataTexture2D.html#update">update</a></li></ul></li><li><a href="Framebuffer2D.html">Framebuffer2D</a><ul class='methods'><li data-type='method'><a href="Framebuffer2D.html#init">init</a></li><li data-type='method'><a href="Framebuffer2D.html#setActive">setActive</a></li><li data-type='method'><a href="Framebuffer2D.html#update">update</a></li></ul></li><li><a href="Mat4.html">Mat4</a><ul class='methods'><li data-type='method'><a href="Mat4.html#copy">copy</a></li><li data-type='method'><a href="Mat4.html#identity">identity</a></li><li data-type='method'><a href="Mat4.html#invert">invert</a></li><li data-type='method'><a href="Mat4.html#multiply">multiply</a></li><li data-type='method'><a href="Mat4.html#perspective">perspective</a></li><li data-type='method'><a href="Mat4.html#trs">trs</a></li><li data-type='method'><a href="Mat4.html#zero">zero</a></li></ul></li><li><a href="Mesh.html">Mesh</a><ul class='methods'><li data-type='method'><a href="Mesh.html#draw">draw</a></li><li data-type='method'><a href="Mesh.html#getAttribute">getAttribute</a></li></ul></li><li><a href="MeshAttribute.html">MeshAttribute</a><ul class='methods'><li data-type='method'><a href="MeshAttribute.html#bind">bind</a></li><li data-type='method'><a href="MeshAttribute.html#init">init</a></li><li data-type='method'><a href="MeshAttribute.html#update">update</a></li></ul></li><li><a href="Quat.html">Quat</a><ul class='methods'><li data-type='method'><a href="Quat.html#multiply">multiply</a></li><li data-type='method'><a href="Quat.html#rotateX">rotateX</a></li><li data-type='method'><a href="Quat.html#rotateY">rotateY</a></li><li data-type='method'><a href="Quat.html#rotateZ">rotateZ</a></li><li data-type='method'><a href="Quat.html#setEuler">setEuler</a></li></ul></li><li><a href="ShaderProgram.html">ShaderProgram</a><ul class='methods'><li data-type='method'><a href="ShaderProgram.html#compile">compile</a></li><li data-type='method'><a href="ShaderProgram.html#use">use</a></li></ul></li><li><a href="Texture2D.html">Texture2D</a><ul class='methods'><li data-type='method'><a href="Texture2D.html#init">init</a></li><li data-type='method'><a href="Texture2D.html#setActive">setActive</a></li><li data-type='method'><a href="Texture2D.html#update">update</a></li></ul></li><li><a href="Transform.html">Transform</a><ul class='methods'><li data-type='method'><a href="Transform.html#addChild">addChild</a></li><li data-type='method'><a href="Transform.html#draw">draw</a></li><li data-type='method'><a href="Transform.html#onBeforeDraw">onBeforeDraw</a></li><li data-type='method'><a href="Transform.html#setParent">setParent</a></li><li data-type='method'><a href="Transform.html#update">update</a></li><li data-type='method'><a href="Transform.html#updateMatrix">updateMatrix</a></li></ul></li><li><a href="Vec3.html">Vec3</a><ul class='methods'><li data-type='method'><a href="Vec3.html#isZero">isZero</a></li><li data-type='method'><a href="Vec3.html#length">length</a></li><li data-type='method'><a href="Vec3.html#lengthSqr">lengthSqr</a></li><li data-type='method'><a href="Vec3.html#normalize">normalize</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">vec3.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * 3D vector class
+ */
+export class Vec3{
+    /**
+     * Creates new 3D Vector from parameters.
+     * @param {Number} x
+     * @param {Number} y 
+     * @param {Number} z 
+     */
+    constructor( x,y,z ){
+        /** 
+         * a float array storing the components of the vector.
+         * this can be passed to {@link ShaderProgram} as an uniform.
+         * @type {Float32Array}
+         */
+        this.data = new Float32Array( [x||0, y||0, z||0] );
+    }
+    get x(){ return this.data[0]; }
+    get y(){ return this.data[1]; }
+    get z(){ return this.data[2]; }
+    set x(val){ this.data[0] = val; }
+    set y(val){ this.data[1] = val; }
+    set z(val){ this.data[2] = val; }
+
+    set(x,y,z){
+        this.data[0] = x;
+        this.data[1] = y;
+        this.data[2] = z;
+    }
+
+    /**
+     * Squared length of this vector. this is cheaper than {@link Vec3#length}.
+     * @returns {number} squared length.
+     */
+    lengthSqr(){
+        return this.data[0]*this.data[0] + this.data[1]*this.data[1] + this.data[2]*this.data[2];
+    }
+    /**
+     * Length of the vector.
+     * @returns {number} length
+     */
+    length(){
+        return Math.sqrt(this.lengthSqr);
+    }
+    /**
+     * Normalizes the vector by dividing it by its own length. This ensures that the length is always one.
+     */
+    normalize(){
+        if(this.isZero()){return;}
+        let l = this.length();
+        this.data[0] /= l;
+        this.data[1] /= l;
+        this.data[2] /= l;
+    }
+    /**
+     * Returns true if all components are zero.
+     */
+    isZero(){
+        return this[0] == 0 &amp;&amp; this[1] == 0 &amp;&amp; this[2] == 0;
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Jan 06 2019 09:24:37 GMT+0200 (EET) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+
+
+</body>
+</html>

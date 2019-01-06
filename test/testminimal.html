@@ -1,0 +1,68 @@
+<head>
+    <meta charset="UTF-8"></meta> 
+    <style>
+        body{
+            background-color:black;
+            margin:0;
+            padding:0;
+        }
+    </style>
+</head>
+<body>
+    <script src="../build/glwrap.js"></script>
+    <script>
+        let canvas = document.createElement("canvas");
+        let gl = canvas.getContext("webgl", {antialias:0});
+        document.body.appendChild(canvas);
+
+        let program = new glwrap.ShaderProgram(
+            `
+                precision mediump float;
+                attribute vec3 position;
+                varying vec3 v_position;
+                void main(){
+                    v_position = position;
+                    gl_Position = vec4( position, 1.0 );
+                }
+            `,
+            `
+                precision mediump float;
+                varying vec3 v_position;
+                void main(){
+                    gl_FragColor = vec4( v_position*0.5+0.5, 1.0 );
+                }
+            `
+        );
+        let mesh = new glwrap.Mesh([ 
+            new glwrap.MeshAttribute(
+                'position', 
+                new Float32Array([ 
+                    -1,-1,0, 0,1,0, 1,-1,0
+                ]),
+                3,
+                'FLOAT',
+                false,
+                'STATIC_DRAW'
+            )
+        ]);
+        
+        gl.clearColor(0.0, 0.5, 0.5, 1.0);
+        
+        function resize(){
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+
+        function mainloop(){
+            requestAnimationFrame(mainloop);
+            gl.viewport(0,0,canvas.width,canvas.height);
+            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+            program.use(gl);
+            mesh.draw(gl, program);
+        }
+
+        resize();
+        mainloop();
+    </script>
+</body>
