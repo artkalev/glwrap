@@ -23,6 +23,12 @@ class Vec3{
     set y(val){ this.data[1] = val; }
     set z(val){ this.data[2] = val; }
 
+    set(x,y,z){
+        this.data[0] = x;
+        this.data[1] = y;
+        this.data[2] = z;
+    }
+
     /**
      * Squared length of this vector. this is cheaper than {@link Vec3#length}.
      * @returns {number} squared length.
@@ -243,30 +249,30 @@ class Mat4{
      * @param {Mat4} other 
      */
     multiply(other){
-        let a00 = this.data[0], a01 = this.data[1], a02 = this.data[2], a03 = this.data[3];
-        let a10 = this.data[4], a11 = this.data[5], a12 = this.data[6], a13 = this.data[7];
-        let a20 = this.data[8], a21 = this.data[9], a22 = this.data[10], a23 = this.data[11];
-        let a30 = this.data[12], a31 = this.data[13], a32 = this.data[14], a33 = this.data[15];
+        let a00 = other.data[0], a01 = other.data[1], a02 = other.data[2], a03 = other.data[3];
+        let a10 = other.data[4], a11 = other.data[5], a12 = other.data[6], a13 = other.data[7];
+        let a20 = other.data[8], a21 = other.data[9], a22 = other.data[10], a23 = other.data[11];
+        let a30 = other.data[12], a31 = other.data[13], a32 = other.data[14], a33 = other.data[15];
 
-        let b0  = other.data[0], b1 = other.data[1], b2 = other.data[2], b3 = other.data[3];
+        let b0  = this.data[0], b1 = this.data[1], b2 = this.data[2], b3 = this.data[3];
         this.data[0] = b0*a00 + b1*a10 + b2*a20 + b3*a30;
         this.data[1] = b0*a01 + b1*a11 + b2*a21 + b3*a31;
         this.data[2] = b0*a02 + b1*a12 + b2*a22 + b3*a32;
         this.data[3] = b0*a03 + b1*a13 + b2*a23 + b3*a33;
 
-        b0 = other.data[4]; b1 = other.data[5]; b2 = other.data[6]; b3 = other.data[7];
+        b0 = this.data[4]; b1 = this.data[5]; b2 = this.data[6]; b3 = this.data[7];
         this.data[4] = b0*a00 + b1*a10 + b2*a20 + b3*a30;
         this.data[5] = b0*a01 + b1*a11 + b2*a21 + b3*a31;
         this.data[6] = b0*a02 + b1*a12 + b2*a22 + b3*a32;
         this.data[7] = b0*a03 + b1*a13 + b2*a23 + b3*a33;
 
-        b0 = other.data[8]; b1 = other.data[9]; b2 = other.data[10]; b3 = other.data[11];
+        b0 = this.data[8]; b1 = this.data[9]; b2 = this.data[10]; b3 = this.data[11];
         this.data[8] = b0*a00 + b1*a10 + b2*a20 + b3*a30;
         this.data[9] = b0*a01 + b1*a11 + b2*a21 + b3*a31;
         this.data[10] = b0*a02 + b1*a12 + b2*a22 + b3*a32;
         this.data[11] = b0*a03 + b1*a13 + b2*a23 + b3*a33;
 
-        b0 = other.data[12]; b1 = other.data[13]; b2 = other.data[14]; b3 = other.data[15];
+        b0 = this.data[12]; b1 = this.data[13]; b2 = this.data[14]; b3 = this.data[15];
         this.data[12] = b0*a00 + b1*a10 + b2*a20 + b3*a30;
         this.data[13] = b0*a01 + b1*a11 + b2*a21 + b3*a31;
         this.data[14] = b0*a02 + b1*a12 + b2*a22 + b3*a32;
@@ -314,6 +320,12 @@ class Mat4{
         this.data[14] = pos.data[2];
         this.data[15] = 1;
     }
+    setTranslation(x,y,z){
+        this.identity();
+        this.data[12] = x;
+        this.data[13] = y;
+        this.data[14] = z;
+    }
     /**
      * Sets this matrix to represent perspective projection.
      * @param {Number} fov field of view
@@ -322,7 +334,7 @@ class Mat4{
      * @param {Number} far far clipping plane
      */
     perspective( fov, aspect, near, far ){
-        let f = 1.0 / Math.tan(fovy / 2), nf;
+        let f = 1.0 / Math.tan(fov / 2), nf;
         this.data[0] = f / aspect;
         this.data[1] = 0;
         this.data[2] = 0;
@@ -345,7 +357,6 @@ class Mat4{
             this.data[10] = -1;
             this.data[14] = -2 * near;
         }
-        return out;
     }
     /**
      * Copy data values from other matrix
@@ -1027,19 +1038,19 @@ class Transform{
          * @name Transform#localPos
          * @type {Vec3}
          */
-        this.localPos = vec3.create();
+        this.localPos = new Vec3();
         /** 
          * @description Rotation in localSpace. set {@link Transform#matrixNeedsUpdate} true after modifying manually!
          * @name Transform#localRot
          * @type {Quat}
          */
-        this.localRot = quat.create();
+        this.localRot = new Quat();
         /** 
          * @description Scale in localSpace. set {@link Transform#matrixNeedsUpdate} true after modifying manually!
          * @name Transform#localScale
          * @type {Vec3}
          */
-        this.localScale = vec3.fromValues(1,1,1);
+        this.localScale = new Vec3(1,1,1);
         /** 
          * @description transformation from localSpace to world space. This is used as model matrix in glsl.
          * Calculated from {@link Transform#localPos},{@link Transform#localRot},{@link Transform#localScale}
@@ -1048,13 +1059,13 @@ class Transform{
          * @name Transform#localToWorld
          * @type {Mat4}
          */
-        this.localToWorld = mat4.create();
+        this.localToWorld = new Mat4();
         /**
          * @description transformation from world space to local space. This is just {@link Transform#localToWorld} inverted.
          * @name Transform#worldToLocal
          * @type {Mat4}
          */
-        this.worldToLocal = mat4.create();
+        this.worldToLocal = new Mat4();
         /**
          * @description shader program which is used when drawing {@link Transform#mesh}
          * @name Transform#program
@@ -1140,14 +1151,14 @@ class Transform{
      */
     updateMatrix(){
         /* matrix recalculations */
-        this.localToWorld.trs( this.localRot, this.localPos, this.localScale );
+        this.localToWorld.trs( this.localPos, this.localRot, this.localScale );
         if(this.parent != null){
             this.localToWorld.multiply( this.parent.localToWorld );
         }
         this.worldToLocal.copy( this.localToWorld );
         this.worldToLocal.invert();
         for(let i = 0; i < this.children.length; i++){
-            this.children[i].matrixUpdate = true;
+            this.children[i].matrixNeedsUpdate = true;
         }
         this.matrixNeedsUpdate = false;
     }
@@ -1172,17 +1183,10 @@ class Transform{
         if(this.mesh == null){return;}
         this.onBeforeDraw();
         this.program.use(gl);
-        if(!viewMatrix){
-            this.program.setUniform(gl, 'u_viewMatrix', 'm4', identityMatrix);
-        }else{
-            this.program.setUniform(gl, 'u_viewMatrix', 'm4', viewMatrix);
-        }
-        if(!projectionMatrix){
-            this.program.setUniform(gl, 'u_projMatrix', 'm4', identityMatrix);
-        }else{
-            this.program.setUniform(gl, 'u_projMatrix', 'm4', projectionMatrix);
-        }
-        this.program.setUniform(gl, 'u_modelMatrix', 'm4', this.localToWorld);
+        this.program.setUniform(gl, 'viewMatrix', 'm4', viewMatrix.data);
+        this.program.setUniform(gl, 'projMatrix', 'm4', projectionMatrix.data);
+        
+        this.program.setUniform(gl, 'modelMatrix', 'm4', this.localToWorld.data);
         for(let name in this.uniforms){
             this.program.setUniform(gl,name,this.uniforms[name].type, this.uniforms[name].value);
         }
