@@ -165,15 +165,13 @@ export class Transform{
      * @param {Float32Array} viewMatrix viewMatrix to be used by the shaderProgram. if null then identity matrix is used
      * @param {Float32Array} projectionMatrix projection matrix to be used by the shader program. if null identity matrix is used
      */
-    draw(gl, viewMatrix, projectionMatrix){
+    draw(gl, viewProjectionMatrix){
         if(!this.visible){return;}
         if(this.program == null){return;}
         if(this.mesh == null){return;}
         this.onBeforeDraw();
         this.program.use(gl);
-        this.program.setUniform(gl, 'viewMatrix', 'm4', viewMatrix.data);
-        this.program.setUniform(gl, 'projMatrix', 'm4', projectionMatrix.data);
-        
+        this.program.setUniform(gl, 'viewProjectionMatrix', 'm4', viewProjectionMatrix.data);
         this.program.setUniform(gl, 'modelMatrix', 'm4', this.localToWorld.data);
         for(let name in this.uniforms){
             this.program.setUniform(gl,name,this.uniforms[name].type, this.uniforms[name].value);

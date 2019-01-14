@@ -7,6 +7,7 @@ export * from './dataTexture2D.js';
 export * from './texture2D.js';
 export * from './framebuffer2D.js';
 export * from './transform.js';
+export * from './camera.js';
 export * from './shaderProgram.js';
 export * from './mesh.js';
 export * from './meshAttribute.js';

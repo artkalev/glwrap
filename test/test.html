@@ -18,12 +18,9 @@
         let gl = canvas.getContext("webgl", {antialias:0});
         document.body.appendChild(canvas);
 
-        // initializing view and projection matrices
-        let view = new glwrap.Mat4();
-        view.setTranslation( 0,0,5 );
-        view.invert();
-        let proj = new glwrap.Mat4();
-        proj.perspective( Math.PI/2, canvas.width / canvas.height, 0.1, 100.0 );
+        // initializing view and projection with Camera
+        let camera = new glwrap.Camera();
+        camera.localPos.set(0,0,5);
 
         // initializing objects to draw with.
         let texture = new glwrap.Texture2D('./textures/cobblestone.png');
@@ -33,14 +30,13 @@
                 attribute vec3 position;
                 attribute vec2 uv;
                 uniform mat4 modelMatrix;
-                uniform mat4 viewMatrix;
-                uniform mat4 projMatrix;
+                uniform mat4 viewProjectionMatrix;
                 varying vec3 v_position;
                 varying vec2 v_uv;
                 void main(){
                     v_position = position;
                     v_uv = uv;
-                    gl_Position = projMatrix * viewMatrix * modelMatrix * vec4( position, 1.0 );
+                    gl_Position = viewProjectionMatrix * modelMatrix * vec4( position, 1.0 );
                 }
             `,
             `
@@ -104,7 +100,7 @@
 
         let obj = new glwrap.Transform(mesh, program);
         obj.onupdate = function(){
-            this.localRot.rotateY(0.01);
+            this.localPos.y = Math.sin(Date.now()/1000);
             this.matrixNeedsUpdate = true;
         }
         let obj1 = new glwrap.Transform(mesh, program);
@@ -115,38 +111,59 @@
             this.localRot.rotateX(0.01);
             this.matrixNeedsUpdate = true;
         }
-        let obj2 = new glwrap.Transform(mesh, program);
-        obj2.setParent(obj);
-        obj2.localPos.x = -2;
-        obj2.localScale.set(0.5,0.5,0.5);
-        obj2.onupdate = function(){
-            this.localRot.rotateX(-0.01);
-            this.matrixNeedsUpdate = true;
-        }
+        
 
         gl.clearColor(0.0, 0.5, 0.5, 1.0);
 
         function resize(){
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            proj.perspective(Math.PI/2, canvas.width/canvas.height, 0.1,100.0);
         }
 
         window.addEventListener('resize', resize);
+        window.addEventListener('mousemove', onMouseMove);
+
+
+        let cursorVec = new glwrap.Vec3();
+        let mouseX = 0;
+        let mouseY = 0;
+
+        function onMouseMove(e){
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        }
+
+        let cursorCube = new glwrap.Transform(mesh, program);
+        cursorCube.localScale.set(0.1,0.1,0.1);
+        cursorCube.onupdate = function(){
+            cursorVec.x = mouseX;
+            cursorVec.y = mouseY;
+            cursorVec.z = -1;
+            camera.screenToWorld( cursorVec );
+            this.localPos.copy(cursorVec);
+            this.localRot.rotateX(0.01);
+            this.localRot.rotateZ(0.01);
+            this.matrixNeedsUpdate = true;
+        };
 
         function mainloop(){
             requestAnimationFrame(mainloop);
             
+            
+
             obj.update();
             obj1.update();
-            obj2.update();
+
             
-            gl.viewport(0,0,canvas.width,canvas.height);
-            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+            cursorCube.update();
+            camera.update();
             
-            obj.draw(gl, view, proj);
-            obj1.draw(gl, view, proj);
-            obj2.draw(gl, view, proj);
+            camera.setActive(gl);
+            
+            obj.draw(gl, camera.viewProjectionMatrix);
+            obj1.draw(gl, camera.viewProjectionMatrix);
+            cursorCube.draw(gl, camera.viewProjectionMatrix);
         }
 
         resize();

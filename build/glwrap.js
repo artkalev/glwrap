@@ -167,13 +167,80 @@ var glwrap = (function (exports) {
         this.data[2] /= l;
       }
       /**
-       * Returns true if all components are zero.
+       * Dot product between this and other vector.
+       * @param {Vec3} other 
+       */
+
+    }, {
+      key: "dot",
+      value: function dot(other) {
+        return this.data[0] * other.data[0] + this.data[1] * other.data[1] + this.data[2] * other.data[2];
+      }
+      /**
+       * Dot product from two vectors.
+       * @param {Vec3} a 
+       * @param {Vec3} b 
+       */
+
+    }, {
+      key: "cross",
+
+      /**
+       * Set this vector to be the cross product with another.
+       * @param {Vec3} other 
+       */
+      value: function cross(other) {
+        var ax = this.data[0],
+            ay = this.data[1],
+            az = this.data[2];
+        var bx = other.data[0],
+            by = other.data[1],
+            bz = other.data[2];
+        this.data[0] = ay * bz - az * by;
+        this.data[1] = az * bx - ax * bz;
+        this.data[2] = ax * by - ay * bx;
+      }
+      /**
+       * Cross product vector from two vectors.
+       * @param {Vec3} a 
+       * @param {Vec3} b 
        */
 
     }, {
       key: "isZero",
+
+      /**
+       * Returns true if all components are zero.
+       */
       value: function isZero() {
         return this[0] == 0 && this[1] == 0 && this[2] == 0;
+      }
+      /**
+       * Transforms this vector with the given 4x4 matrix.
+       * @param {Mat4} mat 
+       */
+
+    }, {
+      key: "transformMat4",
+      value: function transformMat4(mat) {
+        var x = this.data[0],
+            y = this.data[1],
+            z = this.data[2];
+        var w = mat.data[3] * x + mat.data[7] * y + mat.data[11] * z + mat.data[15];
+        w = w || 1.0;
+        this.data[0] = (mat.data[0] * x + mat.data[4] * y + mat.data[8] * z + mat.data[12]) / w;
+        this.data[1] = (mat.data[1] * x + mat.data[5] * y + mat.data[9] * z + mat.data[13]) / w;
+        this.data[2] = (mat.data[2] * x + mat.data[6] * y + mat.data[10] * z + mat.data[14]) / w;
+      }
+      /**
+       * 
+       * @param {Vec3} other 
+       */
+
+    }, {
+      key: "copy",
+      value: function copy(other) {
+        this.data.set(other.data);
       }
     }, {
       key: "x",
@@ -199,14 +266,34 @@ var glwrap = (function (exports) {
       set: function set(val) {
         this.data[2] = val;
       }
+    }], [{
+      key: "dot",
+      value: function dot(a, b) {
+        return a.data[0] * b.data[0] + a.data[1] * b.data[1] + a.data[2] * b.data[2];
+      }
+    }, {
+      key: "cross",
+      value: function cross(a, b) {
+        var ax = a.data[0],
+            ay = a.data[1],
+            az = a.data[2];
+        var bx = b.data[0],
+            by = b.data[1],
+            bz = b.data[2];
+        return new Vec3(ay * bz - az * by, az * bx - ax * bz, ax * by - ay * bx);
+      }
     }]);
 
     return Vec3;
   }();
 
+  var tmpvec = new Vec3();
+  var xvec = new Vec3(1, 0, 0);
+  var yvec = new Vec3(0, 1, 0);
   /**
    * Quaternion rotation
    */
+
   var Quat =
   /*#__PURE__*/
   function () {
@@ -219,14 +306,30 @@ var glwrap = (function (exports) {
       this.data = new Float32Array([0, 0, 0, 1]);
     }
     /**
-     * Calculates this quaternion from euler angles.
-     * @param {Number} x 
-     * @param {Number} y 
-     * @param {Number} z 
+     * sets this quaternion from axis and angle.
+     * @param {Vec3} axis axis of rotation
+     * @param {Number} angle angle in radians 
      */
 
 
     _createClass(Quat, [{
+      key: "setAxisAngle",
+      value: function setAxisAngle(axis, angle) {
+        angle = angle * 0.5;
+        var s = Math.sin(angle);
+        this.data[0] = s * axis.data[0];
+        this.data[1] = s * axis.data[1];
+        this.data[2] = s * axis.data[2];
+        this.data[3] = Math.cos(angle);
+      }
+      /**
+       * Calculates this quaternion from euler angles.
+       * @param {Number} x 
+       * @param {Number} y 
+       * @param {Number} z 
+       */
+
+    }, {
       key: "setEuler",
       value: function setEuler(x, y, z) {
         var halfToRad = 0.5 * Math.PI / 180.0;
@@ -324,6 +427,54 @@ var glwrap = (function (exports) {
         this.data[1] = ay * bw - ax * bz;
         this.data[2] = az * bw + aw * bz;
         this.data[3] = aw * bw - az * bz;
+      }
+    }, {
+      key: "rotationTo",
+      value: function rotationTo(v0, v1) {
+        var dot = Vec3.dot(v0, v1);
+
+        if (dot < -0.999999) {
+          tmpvec.cross(xvec, v0);
+          if (tmpvec.length() < 0.000001) tmpvec.cross(yvec, v0);
+          tmpvec.normalize();
+          this.setAxisAngle(tmpvec, Math.PI);
+        } else if (dot > 0.999999) {
+          this.data[0] = 0;
+          this.data[1] = 0;
+          this.data[2] = 0;
+          this.data[3] = 1;
+        } else {
+          v0.cross(v1);
+          this.data[0] = v0.data[0];
+          this.data[1] = v0.data[1];
+          this.data[2] = v0.data[2];
+          this.data[3] = 1 + dot;
+          this.normalize();
+        }
+      }
+    }, {
+      key: "length",
+      value: function length() {
+        var l = this.data[0] * this.data[0] + this.data[1] * this.data[1] + this.data[2] * this.data[2] + this.data[3] * this.data[3];
+
+        if (l > 0) {
+          return Math.sqrt(l);
+        } else {
+          return 0;
+        }
+      }
+    }, {
+      key: "normalize",
+      value: function normalize() {
+        var l = this.data[0] * this.data[0] + this.data[1] * this.data[1] + this.data[2] * this.data[2] + this.data[3] * this.data[3];
+
+        if (l > 0) {
+          l = 1 / Math.sqrt(l);
+          this.data[0] *= l;
+          this.data[1] *= l;
+          this.data[2] *= l;
+          this.data[3] *= l;
+        }
       }
     }]);
 
@@ -1716,7 +1867,7 @@ var glwrap = (function (exports) {
 
     }, {
       key: "draw",
-      value: function draw(gl, viewMatrix, projectionMatrix) {
+      value: function draw(gl, viewProjectionMatrix) {
         if (!this.visible) {
           return;
         }
@@ -1731,8 +1882,7 @@ var glwrap = (function (exports) {
 
         this.onBeforeDraw();
         this.program.use(gl);
-        this.program.setUniform(gl, 'viewMatrix', 'm4', viewMatrix.data);
-        this.program.setUniform(gl, 'projMatrix', 'm4', projectionMatrix.data);
+        this.program.setUniform(gl, 'viewProjectionMatrix', 'm4', viewProjectionMatrix.data);
         this.program.setUniform(gl, 'modelMatrix', 'm4', this.localToWorld.data);
 
         for (var name in this.uniforms) {
@@ -1746,6 +1896,248 @@ var glwrap = (function (exports) {
     return Transform;
   }();
 
+  /**
+   * Object containing both view and projection matrix. This makes moving the view around more intuituve.
+   * @extends {Transform}
+   */
+
+  var Camera =
+  /*#__PURE__*/
+  function (_Transform) {
+    _inherits(Camera, _Transform);
+
+    function Camera() {
+      var _this;
+
+      _classCallCheck(this, Camera);
+
+      _this = _possibleConstructorReturn(this, _getPrototypeOf(Camera).call(this));
+      /**
+       * Render target for this camera. if null then gl context canvas is used as target.
+       * @type {Framebuffer2D}
+       */
+
+      _this._target = null;
+      /** width is set by target or canvas size automatically @readonly */
+
+      _this._width = 100;
+      /** height is set by target or canvas size automatically @readonly */
+
+      _this._height = 100;
+      /**
+       * Field of view in degrees
+       */
+
+      _this._fov = 90;
+      _this._near = 0.1;
+      _this._far = 1000.0;
+      _this._left = -100;
+      _this._right = 100;
+      _this._top = -100;
+      _this._bottom = 100;
+      _this._perspective = true;
+      _this.projectionMatrix = new Mat4();
+      _this.viewProjectionMatrix = new Mat4();
+      _this.inverseViewProjectionMatrix = new Mat4();
+      /**
+       * If true, the projection matrix is updated the next time this camera is set active.<br>
+       * This is set true if any of the projection realted parameters have been changed.
+       * @name Camera#projectionNeedsUpdate
+       * @type {Boolean}
+       * @default true
+       */
+
+      _this.projectionNeedsUpdate = true;
+      return _this;
+    }
+
+    _createClass(Camera, [{
+      key: "updateViewProjectionMatrix",
+
+      /**
+       * Updates the viewProjection combined matrix. this is done when camera transformation matrix is updated and if the projection matrix is updated.
+       */
+      value: function updateViewProjectionMatrix() {
+        this.viewProjectionMatrix.copy(this.worldToLocal);
+        this.viewProjectionMatrix.multiply(this.projectionMatrix);
+        this.inverseViewProjectionMatrix.copy(this.viewProjectionMatrix);
+        this.inverseViewProjectionMatrix.invert();
+      }
+      /**
+       * Updates the projection matrix. This is done automatically if {@link Camera#projectionNeedsUpdate} is true when {@link Camera#setActive} is called.
+       */
+
+    }, {
+      key: "updateProjectionMatrix",
+      value: function updateProjectionMatrix() {
+        if (this.perspective) {
+          this.projectionMatrix.perspective(this.fov * 0.0174532925, this.width / this.height, this.near, this.far);
+        } else {
+          this.projectionMatrix.orthogonal(this.left, this.right, this.bottom, this.top, this.near, this.far);
+        }
+
+        this.updateViewProjectionMatrix();
+        this.projectionNeedsUpdate = false;
+      }
+    }, {
+      key: "updateMatrix",
+      value: function updateMatrix() {
+        _get(_getPrototypeOf(Camera.prototype), "updateMatrix", this).call(this);
+
+        this.updateViewProjectionMatrix();
+      }
+      /**
+       * Call this before drawing to set up the gl viewport and update projection matrix if needed.
+       * @param {WebGLRenderingContext} gl 
+       */
+
+    }, {
+      key: "setActive",
+      value: function setActive(gl) {
+        if (this._target == null) {
+          this.width = gl.canvas.width;
+          this.height = gl.canvas.height;
+        } else {
+          this.width = this.target.width;
+          this.height = this.target.height;
+
+          this._target.setActive(gl);
+        }
+
+        if (this.projectionNeedsUpdate) {
+          this.updateProjectionMatrix();
+        }
+
+        gl.viewport(0, 0, this.width, this.height);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+      }
+      /**
+       * Transforms the vector from NDC to world space.
+       * @param {Vec3} point Screen point in NDC(normalized device coordinates).
+       */
+
+    }, {
+      key: "NDCToWorld",
+      value: function NDCToWorld(point) {
+        point.transformMat4(this.localToWorld);
+      }
+      /**
+       * Transforms the vector from screen pixel coordinates to world space.
+       * @param {Vec3} point Screen point in pixel coordinates.
+       */
+
+    }, {
+      key: "screenToWorld",
+      value: function screenToWorld(point) {
+        // point to NDC
+        // z is unchanged
+        point.data[0] /= this._width;
+        point.data[0] = point.data[0] * 2 - 1;
+        point.data[1] /= this._height;
+        point.data[1] = point.data[1] * 2 - 1;
+        point.data[1] *= -1; // apply aspect ratio
+
+        point.data[0] *= this._width / this._height;
+        this.NDCToWorld(point);
+      }
+    }, {
+      key: "target",
+      get: function get$$1() {
+        return this._target;
+      },
+      set: function set(value) {
+        this._target = value;
+      }
+    }, {
+      key: "width",
+      get: function get$$1() {
+        return this._width;
+      },
+      set: function set(value) {
+        if (value != this._width) {
+          this._width = value;
+          this.projectionNeedsUpdate = true;
+        }
+      }
+    }, {
+      key: "height",
+      get: function get$$1() {
+        return this._height;
+      },
+      set: function set(value) {
+        if (value != this._height) {
+          this._height = value;
+          this.projectionNeedsUpdate = true;
+        }
+      }
+    }, {
+      key: "fov",
+      get: function get$$1() {
+        return this._fov;
+      },
+      set: function set(value) {
+        this._fov = value;
+        this.projectionNeedsUpdate = true;
+      }
+    }, {
+      key: "near",
+      get: function get$$1() {
+        return this._near;
+      },
+      set: function set(value) {
+        this._near = value;
+        this.projectionNeedsUpdate = true;
+      }
+    }, {
+      key: "left",
+      get: function get$$1() {
+        return this._left;
+      },
+      set: function set(value) {
+        this._left = value;
+        this.projectionNeedsUpdate = true;
+      }
+    }, {
+      key: "right",
+      get: function get$$1() {
+        return this._right;
+      },
+      set: function set(value) {
+        this._right = value;
+        this.projectionNeedsUpdate = true;
+      }
+    }, {
+      key: "top",
+      get: function get$$1() {
+        return this._top;
+      },
+      set: function set(value) {
+        this._top = value;
+        this.projectionNeedsUpdate = true;
+      }
+    }, {
+      key: "bottom",
+      get: function get$$1() {
+        return this._bottom;
+      },
+      set: function set(value) {
+        this._bottom = value;
+        this.projectionNeedsUpdate = true;
+      }
+    }, {
+      key: "perspective",
+      get: function get$$1() {
+        return this._perspective;
+      },
+      set: function set(value) {
+        this._perspective = value;
+        this.projectionNeedsUpdate = true;
+      }
+    }]);
+
+    return Camera;
+  }(Transform);
+
   exports.Vec3 = Vec3;
   exports.Quat = Quat;
   exports.Mat4 = Mat4;
@@ -1754,6 +2146,7 @@ var glwrap = (function (exports) {
   exports.Texture2D = Texture2D;
   exports.Framebuffer2D = Framebuffer2D;
   exports.Transform = Transform;
+  exports.Camera = Camera;
   exports.ShaderProgram = ShaderProgram;
   exports.Mesh = Mesh;
   exports.MeshAttribute = MeshAttribute;

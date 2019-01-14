@@ -1,3 +1,9 @@
+import {Vec3} from './vec3.js';
+
+let tmpvec = new Vec3();
+let xvec = new Vec3(1,0,0);
+let yvec = new Vec3(0,1,0);
+
 /**
  * Quaternion rotation
  */
@@ -7,6 +13,19 @@ export class Quat{
      */
     constructor(){
         this.data = new Float32Array([0,0,0,1]);
+    }
+    /**
+     * sets this quaternion from axis and angle.
+     * @param {Vec3} axis axis of rotation
+     * @param {Number} angle angle in radians 
+     */
+    setAxisAngle(axis, angle){
+        angle = angle * 0.5;
+        let s = Math.sin(angle);
+        this.data[0] = s * axis.data[0];
+        this.data[1] = s * axis.data[1];
+        this.data[2] = s * axis.data[2];
+        this.data[3] = Math.cos(angle);
     }
     /**
      * Calculates this quaternion from euler angles.
@@ -84,5 +103,48 @@ export class Quat{
         this.data[1] = ay * bw - ax * bz;
         this.data[2] = az * bw + aw * bz;
         this.data[3] = aw * bw - az * bz;
+    }
+
+    rotationTo( v0, v1 ){
+        let dot = Vec3.dot(v0, v1);
+        if (dot < -0.999999) {
+        tmpvec.cross( xvec , v0);
+        if (tmpvec.length() < 0.000001)
+            tmpvec.cross( yvec, v0 );
+            tmpvec.normalize();
+            this.setAxisAngle(tmpvec, Math.PI);
+        } else if (dot > 0.999999) {
+            this.data[0] = 0;
+            this.data[1] = 0;
+            this.data[2] = 0;
+            this.data[3] = 1;
+        } else {
+            v0.cross(v1);
+            this.data[0] = v0.data[0];
+            this.data[1] = v0.data[1];
+            this.data[2] = v0.data[2];
+            this.data[3] = 1 + dot;
+            this.normalize();
+        }
+    }
+
+    length(){
+        let l = this.data[0]*this.data[0] + this.data[1]*this.data[1] + this.data[2]*this.data[2] + this.data[3]*this.data[3];
+        if(l > 0){
+            return Math.sqrt(l);
+        }else{
+            return 0;
+        }
+    }
+
+    normalize(){
+        let l = this.data[0]*this.data[0] + this.data[1]*this.data[1] + this.data[2]*this.data[2] + this.data[3]*this.data[3];
+        if(l > 0){
+            l = 1 / Math.sqrt(l);
+            this.data[0] *= l;
+            this.data[1] *= l;
+            this.data[2] *= l;
+            this.data[3] *= l;
+        }
     }
 }
