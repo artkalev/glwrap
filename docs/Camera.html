@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Transform - Documentation</title>
+    <title>Camera - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -31,7 +31,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Transform</h1>
+    <h1 class="page-title">Camera</h1>
     
 
     
@@ -44,11 +44,10 @@
 <header>
     
         <h2>
-        Transform
+        Camera
         </h2>
         
-            <div class="class-description">This is main class to represent an object with given mesh 
-that can be placed into a "world".</div>
+            <div class="class-description">Object containing both view and projection matrix. This makes moving the view around more intuituve.</div>
         
     
 </header>
@@ -63,7 +62,7 @@ that can be placed into a "world".</div>
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="Transform"><span class="type-signature"></span>new Transform<span class="signature">(mesh, program)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Camera"><span class="type-signature"></span>new Camera<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
@@ -75,7 +74,7 @@ that can be placed into a "world".</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="transform.js.html">transform.js</a>, <a href="transform.js.html#line11">line 11</a>
+        <a href="camera.js.html">camera.js</a>, <a href="camera.js.html#line9">line 9</a>
     </li></ul></dd>
     
 
@@ -124,78 +123,6 @@ that can be placed into a "world".</div>
 
 
 
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>mesh</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="Mesh.html">Mesh</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">mesh to be assigned to this transform.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>program</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="ShaderProgram.html">ShaderProgram</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">shader program to be used while drawing the mesh.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
 
 
 
@@ -215,6 +142,17 @@ that can be placed into a "world".</div>
     
 
     
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="Transform.html">Transform</a></li>
+    </ul>
+
+
+    
 
     
 
@@ -226,6 +164,79 @@ that can be placed into a "world".</div>
 
     
         <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="_target"><span class="type-signature"></span>_target<span class="type-signature"> :<a href="Framebuffer2D.html">Framebuffer2D</a></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="camera.js.html">camera.js</a>, <a href="camera.js.html#line16">line 16</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Render target for this camera. if null then gl context canvas is used as target.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="Framebuffer2D.html">Framebuffer2D</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
 
         
             
@@ -248,6 +259,11 @@ that can be placed into a "world".</div>
 
     
 
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Transform.html#children">Transform#children</a>
+    </li></ul></dd>
     
 
     
@@ -322,6 +338,11 @@ that can be placed into a "world".</div>
     
 
     
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Transform.html#id">Transform#id</a>
+    </li></ul></dd>
+    
 
     
 
@@ -394,6 +415,11 @@ that can be placed into a "world".</div>
 
     
 
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Transform.html#localPos">Transform#localPos</a>
+    </li></ul></dd>
     
 
     
@@ -468,6 +494,11 @@ that can be placed into a "world".</div>
     
 
     
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Transform.html#localRot">Transform#localRot</a>
+    </li></ul></dd>
+    
 
     
 
@@ -541,6 +572,11 @@ that can be placed into a "world".</div>
     
 
     
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Transform.html#localScale">Transform#localScale</a>
+    </li></ul></dd>
+    
 
     
 
@@ -613,6 +649,11 @@ that can be placed into a "world".</div>
 
     
 
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Transform.html#localToWorld">Transform#localToWorld</a>
+    </li></ul></dd>
     
 
     
@@ -690,6 +731,11 @@ if <a href="Transform.html#matrixNeedsUpdate">Transform#matrixNeedsUpdate</a> is
     
 
     
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Transform.html#matrixNeedsUpdate">Transform#matrixNeedsUpdate</a>
+    </li></ul></dd>
+    
 
     
 
@@ -764,6 +810,11 @@ This avoids recalculation of matrices after every additional transformation.
     
 
     
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Transform.html#mesh">Transform#mesh</a>
+    </li></ul></dd>
+    
 
     
 
@@ -836,6 +887,11 @@ This avoids recalculation of matrices after every additional transformation.
 
     
 
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Transform.html#parent">Transform#parent</a>
+    </li></ul></dd>
     
 
     
@@ -911,6 +967,11 @@ use Transform#setparent instead of changing this directly.
     
 
     
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Transform.html#program">Transform#program</a>
+    </li></ul></dd>
+    
 
     
 
@@ -964,6 +1025,85 @@ use Transform#setparent instead of changing this directly.
 
         
             
+<h4 class="name" id="projectionNeedsUpdate"><span class="type-signature"></span>projectionNeedsUpdate<span class="type-signature"> :Boolean</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="camera.js.html">camera.js</a>, <a href="camera.js.html#line34">line 34</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>true</li>
+        </ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    If true, the projection matrix is updated the next time this camera is set active.<br>
+This is set true if any of the projection realted parameters have been changed.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Boolean</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
 <h4 class="name" id="uniforms"><span class="type-signature"></span>uniforms<span class="type-signature"> :Object.&lt;String, <a href="global.html#Uniform">Uniform</a>></span></h4>
 
 
@@ -983,6 +1123,11 @@ use Transform#setparent instead of changing this directly.
 
     
 
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Transform.html#uniforms">Transform#uniforms</a>
+    </li></ul></dd>
     
 
     
@@ -1057,6 +1202,11 @@ use Transform#setparent instead of changing this directly.
     
 
     
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Transform.html#visible">Transform#visible</a>
+    </li></ul></dd>
+    
 
     
 
@@ -1129,6 +1279,11 @@ use Transform#setparent instead of changing this directly.
 
     
 
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Transform.html#worldToLocal">Transform#worldToLocal</a>
+    </li></ul></dd>
     
 
     
@@ -1212,6 +1367,11 @@ use Transform#setparent instead of changing this directly.
 
     
 
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Transform.html#addChild">Transform#addChild</a>
+    </li></ul></dd>
     
 
     
@@ -1345,6 +1505,11 @@ use Transform#setparent instead of changing this directly.
 
     
 
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Transform.html#draw">Transform#draw</a>
+    </li></ul></dd>
     
 
     
@@ -1525,6 +1690,11 @@ use Transform#setparent instead of changing this directly.
     
 
     
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Transform.html#onBeforeDraw">Transform#onBeforeDraw</a>
+    </li></ul></dd>
+    
 
     
 
@@ -1657,6 +1827,11 @@ use Transform#setparent instead of changing this directly.
 
     
 
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Transform.html#setParent">Transform#setParent</a>
+    </li></ul></dd>
     
 
     
@@ -1791,6 +1966,11 @@ use Transform#setparent instead of changing this directly.
     
 
     
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Transform.html#update">Transform#update</a>
+    </li></ul></dd>
+    
 
     
 
@@ -1874,6 +2054,11 @@ use Transform#setparent instead of changing this directly.
 
     
 
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Transform.html#updateMatrix">Transform#updateMatrix</a>
+    </li></ul></dd>
     
 
     

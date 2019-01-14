@@ -206,6 +206,38 @@ export class Mat4{
             this.data[14] = -2 * near;
         }
     }
+
+    /**
+     * Sets this matrix to represent orthogonal(parallel) projection.
+     * @param {Number} left left boundary of the frustum box 
+     * @param {Number} right right boundary of the frustum box
+     * @param {Number} bottom bottom boundary of the frustum box
+     * @param {Number} top top boundary of the frustum box
+     * @param {Number} near near boundary of the frustum box
+     * @param {Number} far far boundary of the frustum box
+     */
+    orthogonal( left, right, bottom, top, near, far ){
+        let lr = 1 / (left - right);
+        let bt = 1 / (bottom - top);
+        let nf = 1 / (near - far);
+        this.data[0] = -2 * lr;
+        this.data[1] = 0;
+        this.data[2] = 0;
+        this.data[3] = 0;
+        this.data[4] = 0;
+        this.data[5] = -2 * bt;
+        this.data[6] = 0;
+        this.data[7] = 0;
+        this.data[8] = 0;
+        this.data[9] = 0;
+        this.data[10] = 2 * nf;
+        this.data[11] = 0;
+        this.data[12] = (left + right) * lr;
+        this.data[13] = (top + bottom) * bt;
+        this.data[14] = (far + near) * nf;
+        this.data[15] = 1;
+    }
+
     /**
      * Copy data values from other matrix
      * @param {Mat4} other 

@@ -54,4 +54,12 @@ export class MeshAttribute{
         gl.vertexAttribPointer(loc, this.size, gl[this.type], this.normalized, 0, 0);
         gl.enableVertexAttribArray(loc);
     }
+    /**
+     * Sets new data buffer. and sets this.needsUpdate true.
+     * @param {ArrayBufferView} newData 
+     */
+    setData(newData){
+        this.data = newData;
+        this.needsUpdate = true;
+    }
 }
