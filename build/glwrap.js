@@ -100,6 +100,26 @@ var glwrap = (function (exports) {
     return _get(target, property, receiver || target);
   }
 
+  function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+  }
+
+  function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) {
+      for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+      return arr2;
+    }
+  }
+
+  function _iterableToArray(iter) {
+    if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+  }
+
+  function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance");
+  }
+
   /**
    * 3D vector class
    */
@@ -1181,6 +1201,74 @@ var glwrap = (function (exports) {
   }();
 
   /**
+   * Holds an array of transforms to make updating and drawing a large number of transforms more convenient.
+   */
+  var Scene =
+  /*#__PURE__*/
+  function () {
+    function Scene() {
+      _classCallCheck(this, Scene);
+
+      this.transforms = [];
+      this.activeCamera = null;
+    }
+    /**
+     * Add Transform to scene objects list. If added transform is camera it is set as the active camera of the scene.
+     * @param {Transform} obj 
+     */
+
+
+    _createClass(Scene, [{
+      key: "addTransform",
+      value: function addTransform(obj) {
+        this.transforms.push(obj);
+
+        if (obj.isCamera) {
+          this.activeCamera = obj;
+        }
+      }
+      /**
+       * Calls {@link Transform#update} on each transform.
+       */
+
+    }, {
+      key: "update",
+      value: function update() {
+        for (var i = 0; i < this.transforms.length; i++) {
+          this.transforms[i].update();
+        }
+      }
+      /**
+       * Sets up the camera and. Calls {@link Transform#draw} on each transform.
+       * @param {WebGLRenderingContext} gl 
+       * @param {Camera} camera If camera is undefined, {@link Scene#activeCamera} is used instead.
+       */
+
+    }, {
+      key: "draw",
+      value: function draw(gl, camera) {
+        var cam = null;
+
+        if (camera !== undefined) {
+          cam = camera;
+        } else if (this.activeCamera != null) {
+          cam = this.activeCamera;
+        } else {
+          throw "No camera available to render with!";
+        }
+
+        cam.setActive(gl);
+
+        for (var i = 0; i < this.transforms.length; i++) {
+          this.transforms[i].draw(gl, cam.viewProjectionMatrix);
+        }
+      }
+    }]);
+
+    return Scene;
+  }();
+
+  /**
    * @typedef {Object} Uniform
    * @description an object that contains type and value of an uniform.<br>
    * @property {String} type uniform type
@@ -1912,6 +2000,7 @@ var glwrap = (function (exports) {
       _classCallCheck(this, Camera);
 
       _this = _possibleConstructorReturn(this, _getPrototypeOf(Camera).call(this));
+      _this.isCamera = true;
       /**
        * Render target for this camera. if null then gl context canvas is used as target.
        * @type {Framebuffer2D}
@@ -1924,6 +2013,7 @@ var glwrap = (function (exports) {
       /** height is set by target or canvas size automatically @readonly */
 
       _this._height = 100;
+      _this.clearColor = [0, 0, 0, 1];
       /**
        * Field of view in degrees
        */
@@ -2008,6 +2098,7 @@ var glwrap = (function (exports) {
           this.updateProjectionMatrix();
         }
 
+        gl.clearColor.apply(gl, _toConsumableArray(this.clearColor));
         gl.viewport(0, 0, this.width, this.height);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
       }
@@ -2145,6 +2236,7 @@ var glwrap = (function (exports) {
   exports.DataTexture2D = DataTexture2D;
   exports.Texture2D = Texture2D;
   exports.Framebuffer2D = Framebuffer2D;
+  exports.Scene = Scene;
   exports.Transform = Transform;
   exports.Camera = Camera;
   exports.ShaderProgram = ShaderProgram;

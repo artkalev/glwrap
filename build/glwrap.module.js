@@ -816,6 +816,53 @@ class Framebuffer2D{
 }
 
 /**
+ * Holds an array of transforms to make updating and drawing a large number of transforms more convenient.
+ */
+class Scene{
+    constructor(){
+        this.transforms = [];
+        this.activeCamera = null;
+    }
+    /**
+     * Add Transform to scene objects list. If added transform is camera it is set as the active camera of the scene.
+     * @param {Transform} obj 
+     */
+    addTransform( obj ){
+        this.transforms.push(obj);
+        if(obj.isCamera){
+            this.activeCamera = obj;
+        }
+    }
+    /**
+     * Calls {@link Transform#update} on each transform.
+     */
+    update(){
+        for(let i = 0 ; i < this.transforms.length; i++){
+            this.transforms[i].update();
+        }
+    }
+    /**
+     * Sets up the camera and. Calls {@link Transform#draw} on each transform.
+     * @param {WebGLRenderingContext} gl 
+     * @param {Camera} camera If camera is undefined, {@link Scene#activeCamera} is used instead.
+     */
+    draw(gl, camera ){
+        let cam = null;
+        if(camera !== undefined){
+            cam = camera;
+        }else if(this.activeCamera != null){
+            cam = this.activeCamera;
+        }else{
+            throw "No camera available to render with!";
+        }
+        cam.setActive(gl);
+        for(let i = 0 ; i < this.transforms.length; i++){
+            this.transforms[i].draw(gl, cam.viewProjectionMatrix);
+        }
+    }
+}
+
+/**
  * @typedef {Object} Uniform
  * @description an object that contains type and value of an uniform.<br>
  * @property {String} type uniform type
@@ -1366,6 +1413,7 @@ class Transform{
 class Camera extends Transform{
     constructor(){
         super();
+        this.isCamera = true;
         /**
          * Render target for this camera. if null then gl context canvas is used as target.
          * @type {Framebuffer2D}
@@ -1375,6 +1423,7 @@ class Camera extends Transform{
         this._width = 100;
         /** height is set by target or canvas size automatically @readonly */
         this._height = 100;
+        this.clearColor = [0,0,0,1];
         /**
          * Field of view in degrees
          */
@@ -1473,6 +1522,7 @@ class Camera extends Transform{
         if(this.projectionNeedsUpdate){
             this.updateProjectionMatrix();
         }
+        gl.clearColor( ...this.clearColor );
         gl.viewport(0,0,this.width, this.height);
         gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT );
     }
@@ -1506,4 +1556,4 @@ class Camera extends Transform{
     }
 }
 
-export { Vec3, Quat, Mat4, BaseTexture2D, DataTexture2D, Texture2D, Framebuffer2D, Transform, Camera, ShaderProgram, Mesh, MeshAttribute };
+export { Vec3, Quat, Mat4, BaseTexture2D, DataTexture2D, Texture2D, Framebuffer2D, Scene, Transform, Camera, ShaderProgram, Mesh, MeshAttribute };

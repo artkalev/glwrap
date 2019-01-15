@@ -6,6 +6,7 @@ export * from './baseTexture2D.js';
 export * from './dataTexture2D.js';
 export * from './texture2D.js';
 export * from './framebuffer2D.js';
+export * from './scene.js';
 export * from './transform.js';
 export * from './camera.js';
 export * from './shaderProgram.js';

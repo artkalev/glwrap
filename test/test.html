@@ -18,9 +18,11 @@
         let gl = canvas.getContext("webgl", {antialias:0});
         document.body.appendChild(canvas);
 
-        // initializing view and projection with Camera
         let camera = new glwrap.Camera();
         camera.localPos.set(0,0,5);
+
+        let scene = new glwrap.Scene();
+        scene.addTransform(camera);
 
         // initializing objects to draw with.
         let texture = new glwrap.Texture2D('./textures/cobblestone.png');
@@ -112,6 +114,8 @@
             this.matrixNeedsUpdate = true;
         }
         
+        scene.addTransform(obj);
+        scene.addTransform(obj1);
 
         gl.clearColor(0.0, 0.5, 0.5, 1.0);
 
@@ -146,24 +150,12 @@
             this.matrixNeedsUpdate = true;
         };
 
+        scene.addTransform(cursorCube);
+
         function mainloop(){
             requestAnimationFrame(mainloop);
-            
-            
-
-            obj.update();
-            obj1.update();
-
-            
-
-            cursorCube.update();
-            camera.update();
-            
-            camera.setActive(gl);
-            
-            obj.draw(gl, camera.viewProjectionMatrix);
-            obj1.draw(gl, camera.viewProjectionMatrix);
-            cursorCube.draw(gl, camera.viewProjectionMatrix);
+            scene.update();
+            scene.draw(gl);
         }
 
         resize();

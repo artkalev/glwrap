@@ -9,6 +9,7 @@ import { Framebuffer2D } from './framebuffer2D.js';
 export class Camera extends Transform{
     constructor(){
         super();
+        this.isCamera = true;
         /**
          * Render target for this camera. if null then gl context canvas is used as target.
          * @type {Framebuffer2D}
@@ -18,6 +19,7 @@ export class Camera extends Transform{
         this._width = 100;
         /** height is set by target or canvas size automatically @readonly */
         this._height = 100;
+        this.clearColor = [0,0,0,1];
         /**
          * Field of view in degrees
          */
@@ -116,6 +118,7 @@ export class Camera extends Transform{
         if(this.projectionNeedsUpdate){
             this.updateProjectionMatrix();
         }
+        gl.clearColor( ...this.clearColor );
         gl.viewport(0,0,this.width, this.height);
         gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT );
     }
