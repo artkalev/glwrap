@@ -31,13 +31,16 @@
                 precision mediump float;
                 attribute vec3 position;
                 attribute vec2 uv;
+                attribute vec3 normal;
                 uniform mat4 modelMatrix;
                 uniform mat4 viewProjectionMatrix;
                 varying vec3 v_position;
                 varying vec2 v_uv;
+                varying vec3 v_normal;
                 void main(){
                     v_position = position;
-                    v_uv = uv;
+                    v_uv = vec2(uv.x, 1.0-uv.y);
+                    v_normal = normal;
                     gl_Position = viewProjectionMatrix * modelMatrix * vec4( position, 1.0 );
                 }
             `,
@@ -46,66 +49,26 @@
                 uniform sampler2D colorTex;
                 varying vec3 v_position;
                 varying vec2 v_uv;
+                varying vec3 v_normal;
                 void main(){
                     vec4 color = texture2D(colorTex, v_uv);
-                    gl_FragColor = vec4( color.rgb, 1.0 );
+                    gl_FragColor = vec4( color.rgb * (v_normal*0.5+0.5), 1.0 );
                 }
             `,
             {
                 "colorTex":{ type:'t2d', value:texture }
             }
         );
-        let mesh = new glwrap.Mesh([ 
-            new glwrap.MeshAttribute(
-                'position', 
-                new Float32Array([ 
-                    -1,-1,-1,  -1,-1, 1,  -1, 1, 1, //x-
-                    -1,-1,-1,  -1, 1, 1,  -1, 1,-1, //x-
-                     1,-1, 1,   1,-1,-1,   1, 1, 1, //x+
-                     1, 1, 1,   1,-1,-1,   1, 1,-1, //x+
-                    -1,-1,-1,   1, 1,-1,   1,-1,-1, //z-
-                    -1,-1,-1,  -1, 1,-1,   1, 1,-1, //z-
-                     1, 1, 1,  -1,-1, 1,   1,-1, 1, //z+
-                    -1, 1, 1,  -1,-1, 1,   1, 1, 1, //z+
-                     1,-1, 1,  -1,-1, 1,  -1,-1,-1, //y-
-                     1,-1, 1,  -1,-1,-1,   1,-1,-1, //y-
-                    -1, 1, 1,   1, 1, 1,  -1, 1,-1, //y+
-                    -1, 1,-1,   1, 1, 1,   1, 1,-1  //y+
-                ]),
-                3,
-                'FLOAT',
-                false,
-                'STATIC_DRAW'
-            ),
-            new glwrap.MeshAttribute(
-                'uv',
-                new Uint8Array([
-                      0,  0,255,  0,255,255,
-                      0,  0,255,255,  0,255,
-                    255,  0,  0,  0,255,255,
-                    255,255,0,0,  0,255,
-                      0,  0,255,255,255,  0,
-                      0,  0,  0,255,255,255,
-                    255,255,  0,  0,255,  0,
-                      0,255,  0,  0,255,255,
-                    255,255,  0,255,  0,  0,
-                    255,255,  0,  0,255,  0,
-                      0,255,255,255,  0,  0,
-                      0,  0,255,255,255,  0
-                ]),
-                2,
-                'UNSIGNED_BYTE',
-                true,
-                'STATIC_DRAW'
-            )
-        ]);
 
-        let obj = new glwrap.Transform(mesh, program);
+        let objMesh = new glwrap.Mesh();
+        objMesh.loadOBJ("meshes/cube.obj");
+
+        let obj = new glwrap.Transform(objMesh, program);
         obj.onupdate = function(){
             this.localPos.y = Math.sin(Date.now()/1000);
             this.matrixNeedsUpdate = true;
         }
-        let obj1 = new glwrap.Transform(mesh, program);
+        let obj1 = new glwrap.Transform(objMesh, program);
         obj1.setParent(obj);
         obj1.localPos.x = 2;
         obj1.localScale.set(0.5,0.5,0.5);
@@ -137,7 +100,7 @@
             mouseY = e.clientY;
         }
 
-        let cursorCube = new glwrap.Transform(mesh, program);
+        let cursorCube = new glwrap.Transform(objMesh, program);
         cursorCube.localScale.set(0.1,0.1,0.1);
         cursorCube.onupdate = function(){
             cursorVec.x = mouseX;

@@ -1747,6 +1747,54 @@ var glwrap = (function (exports) {
         gl.drawArrays(gl[this.drawMode], 0, this.vertexCount);
         gl.bindBuffer(gl.ARRAY_BUFFER, null);
       }
+      /**
+       * Loads Mesh attributes from .obj file. The obje must be triangulated and both uv and normal data must be present.
+       * @param {String} url path to the .obj file.
+       */
+
+    }, {
+      key: "loadOBJ",
+      value: function loadOBJ(url) {
+        this.xhttp = new XMLHttpRequest();
+        this.xhttp.mesh = this;
+        this.xhttp.overrideMimeType("text/plain");
+
+        this.xhttp.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            var file_verts = [];
+            var file_uvs = [];
+            var file_normals = [];
+            var mesh_verts = [];
+            var mesh_uvs = [];
+            var mesh_normals = [];
+            var lines = this.responseText.split('\n');
+
+            for (var i = 0; i < lines.length; i++) {
+              var lineargs = lines[i].split(' ');
+
+              if (lineargs[0] == 'v') {
+                file_verts.push([lineargs[1], lineargs[2], lineargs[3]]);
+              } else if (lineargs[0] == 'vt') {
+                file_uvs.push([lineargs[1], lineargs[2]]);
+              } else if (lineargs[0] == 'vn') {
+                file_normals.push([lineargs[1], lineargs[2], lineargs[3]]);
+              } else if (lineargs[0] == 'f') {
+                var v0 = lineargs[1].split('/');
+                var v1 = lineargs[2].split('/');
+                var v2 = lineargs[3].split('/');
+                mesh_verts.push(file_verts[v0[0] - 1][0], file_verts[v0[0] - 1][1], file_verts[v0[0] - 1][2], file_verts[v1[0] - 1][0], file_verts[v1[0] - 1][1], file_verts[v1[0] - 1][2], file_verts[v2[0] - 1][0], file_verts[v2[0] - 1][1], file_verts[v2[0] - 1][2]);
+                mesh_uvs.push(file_uvs[v0[1] - 1][0], file_uvs[v0[1] - 1][1], file_uvs[v1[1] - 1][0], file_uvs[v1[1] - 1][1], file_uvs[v2[1] - 1][0], file_uvs[v2[1] - 1][1]);
+                mesh_normals.push(file_normals[v0[2] - 1][0], file_normals[v0[2] - 1][1], file_normals[v0[2] - 1][2], file_normals[v1[2] - 1][0], file_normals[v1[2] - 1][1], file_normals[v1[2] - 1][2], file_normals[v2[2] - 1][0], file_normals[v2[2] - 1][1], file_normals[v2[2] - 1][2]);
+              }
+            }
+
+            this.mesh.attributes = [new MeshAttribute('position', new Float32Array(mesh_verts), 3, 'FLOAT', false, 'STATIC_DRAW'), new MeshAttribute('uv', new Float32Array(mesh_uvs), 2, 'FLOAT', false, 'STATIC_DRAW'), new MeshAttribute('normal', new Float32Array(mesh_normals), 3, 'FLOAT', false, 'STATIC_DRAW')];
+          }
+        };
+
+        this.xhttp.open("GET", url, true);
+        this.xhttp.send();
+      }
     }]);
 
     return Mesh;
