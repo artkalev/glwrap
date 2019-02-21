@@ -40,7 +40,7 @@ export class Scene{
         }
         cam.setActive(gl);
         for(let i = 0 ; i < this.transforms.length; i++){
-            this.transforms[i].draw(gl, cam.viewProjectionMatrix);
+            this.transforms[i].draw(gl, cam);
         }
     }
 }

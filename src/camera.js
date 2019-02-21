@@ -63,6 +63,8 @@ export class Camera extends Transform{
     set fov(value){ this._fov = value; this.projectionNeedsUpdate = true; }
     get near(){ return this._near; }
     set near(value){ this._near = value; this.projectionNeedsUpdate = true; }
+    get far(){ return this._far; }
+    set far(value){ this._far = value; this.projectionNeedsUpdate = true; }
     get left(){ return this._left; }
     set left(value){ this._left = value; this.projectionNeedsUpdate = true; }
     get right(){ return this._right; }

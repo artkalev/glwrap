@@ -1,0 +1,1 @@
+echo "building plain" && "./node_modules/.bin/rollup" -c rollup.config.plain.js && echo "building module" && "./node_modules/.bin/rollup" -c rollup.config.module.js && echo "building doc" && "./node_modules/.bin/jsdoc" -c jsdoc.config.json && echo "done"

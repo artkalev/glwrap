@@ -9,3 +9,5 @@ The classes are designed to be functional independently.
 
 This is not a webgl rendering engine!
 It is a collection of flexible and easily extendable core components whith which to build a robust engine.
+
+Documentation: https://artkalev.github.io/glwrap/docs/

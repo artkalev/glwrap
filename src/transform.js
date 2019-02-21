@@ -162,16 +162,15 @@ export class Transform{
     /**
      * @description main method to draw this.mesh. binds the shaderprogram and assigns uniforms to it.
      * @param {WebglRenderingContext} gl gl context
-     * @param {Float32Array} viewMatrix viewMatrix to be used by the shaderProgram. if null then identity matrix is used
-     * @param {Float32Array} projectionMatrix projection matrix to be used by the shader program. if null identity matrix is used
+     * @param {Camera} viewMatrix camera that is used to get view and projection
      */
-    draw(gl, viewProjectionMatrix){
+    draw(gl, camera){
         if(!this.visible){return;}
         if(this.program == null){return;}
         if(this.mesh == null){return;}
         this.onBeforeDraw();
         this.program.use(gl);
-        this.program.setUniform(gl, 'viewProjectionMatrix', 'm4', viewProjectionMatrix.data);
+        this.program.setUniform(gl, 'viewProjectionMatrix', 'm4', camera.viewProjectionMatrix.data);
         this.program.setUniform(gl, 'modelMatrix', 'm4', this.localToWorld.data);
         for(let name in this.uniforms){
             this.program.setUniform(gl,name,this.uniforms[name].type, this.uniforms[name].value);

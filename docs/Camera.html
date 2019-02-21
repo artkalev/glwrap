@@ -875,10 +875,7 @@
 
 
 <div class="description">
-    transformation from localSpace to world space. This is used as model matrix in glsl.
-Calculated from <a href="Transform.html#localPos">Transform#localPos</a>,<a href="Transform.html#localRot">Transform#localRot</a>,<a href="Transform.html#localScale">Transform#localScale</a>
-and <a href="Transform.html#parent">Transform#parent</a> matrix.
-if <a href="Transform.html#matrixNeedsUpdate">Transform#matrixNeedsUpdate</a> is true, it will be recalculated at next <a href="Transform.html#update">Transform#update</a> call.
+    transformation from localSpace to world space. This is used as model matrix in glsl.Calculated from <a href="Transform.html#localPos">Transform#localPos</a>,<a href="Transform.html#localRot">Transform#localRot</a>,<a href="Transform.html#localScale">Transform#localScale</a>and <a href="Transform.html#parent">Transform#parent</a> matrix.if <a href="Transform.html#matrixNeedsUpdate">Transform#matrixNeedsUpdate</a> is true, it will be recalculated at next <a href="Transform.html#update">Transform#update</a> call.
 </div>
 
 
@@ -956,8 +953,7 @@ if <a href="Transform.html#matrixNeedsUpdate">Transform#matrixNeedsUpdate</a> is
 
 
 <div class="description">
-    if true, <a href="Transform.html#localToWorld">Transform#localToWorld</a> is recalculated at next <a href="Transform.html#update">Transform#update</a> call.
-This avoids recalculation of matrices after every additional transformation.
+    if true, <a href="Transform.html#localToWorld">Transform#localToWorld</a> is recalculated at next <a href="Transform.html#update">Transform#update</a> call.This avoids recalculation of matrices after every additional transformation.
 </div>
 
 
@@ -1113,8 +1109,7 @@ This avoids recalculation of matrices after every additional transformation.
 
 
 <div class="description">
-    parent transformation of this. It will affect the <a href="Transform.html#localToWorld">Transform#localToWorld</a> matrix.
-use Transform#setparent instead of changing this directly.
+    parent transformation of this. It will affect the <a href="Transform.html#localToWorld">Transform#localToWorld</a> matrix.use Transform#setparent instead of changing this directly.
 </div>
 
 
@@ -1270,8 +1265,7 @@ use Transform#setparent instead of changing this directly.
 
 
 <div class="description">
-    If true, the projection matrix is updated the next time this camera is set active.<br>
-This is set true if any of the projection realted parameters have been changed.
+    If true, the projection matrix is updated the next time this camera is set active.<br>This is set true if any of the projection realted parameters have been changed.
 </div>
 
 
@@ -1674,7 +1668,7 @@ This is set true if any of the projection realted parameters have been changed.
 
     
 
-    <h4 class="name" id="draw"><span class="type-signature"></span>draw<span class="signature">(gl, viewMatrix, projectionMatrix)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="draw"><span class="type-signature"></span>draw<span class="signature">(gl, viewMatrix)</span><span class="type-signature"></span></h4>
 
     
 
@@ -1686,7 +1680,7 @@ This is set true if any of the projection realted parameters have been changed.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="transform.js.html">transform.js</a>, <a href="transform.js.html#line168">line 168</a>
+        <a href="transform.js.html">transform.js</a>, <a href="transform.js.html#line167">line 167</a>
     </li></ul></dd>
     
 
@@ -1798,7 +1792,7 @@ This is set true if any of the projection realted parameters have been changed.
             <td class="type">
             
                 
-<span class="param-type">Float32Array</span>
+<span class="param-type"><a href="Camera.html">Camera</a></span>
 
 
             
@@ -1808,30 +1802,7 @@ This is set true if any of the projection realted parameters have been changed.
 
             
 
-            <td class="description last">viewMatrix to be used by the shaderProgram. if null then identity matrix is used</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>projectionMatrix</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Float32Array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">projection matrix to be used by the shader program. if null identity matrix is used</td>
+            <td class="description last">camera that is used to get view and projection</td>
         </tr>
 
     
@@ -1870,7 +1841,7 @@ This is set true if any of the projection realted parameters have been changed.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="camera.js.html">camera.js</a>, <a href="camera.js.html#line130">line 130</a>
+        <a href="camera.js.html">camera.js</a>, <a href="camera.js.html#line132">line 132</a>
     </li></ul></dd>
     
 
@@ -2141,7 +2112,7 @@ This is set true if any of the projection realted parameters have been changed.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="camera.js.html">camera.js</a>, <a href="camera.js.html#line138">line 138</a>
+        <a href="camera.js.html">camera.js</a>, <a href="camera.js.html#line140">line 140</a>
     </li></ul></dd>
     
 
@@ -2274,7 +2245,7 @@ This is set true if any of the projection realted parameters have been changed.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="camera.js.html">camera.js</a>, <a href="camera.js.html#line109">line 109</a>
+        <a href="camera.js.html">camera.js</a>, <a href="camera.js.html#line111">line 111</a>
     </li></ul></dd>
     
 
@@ -2679,9 +2650,7 @@ This is set true if any of the projection realted parameters have been changed.
 
 
 <div class="description">
-    updates localToWorld and worldToLocal matrices. 
-it Is called from <a href="Transform.html#update">Transform#update</a> if <a href="Transform.html#matrixNeedsUpdate">Transform#matrixNeedsUpdate</a> is true.
-Also recursively updates the bounds of this and the parent chain.
+    updates localToWorld and worldToLocal matrices. it Is called from <a href="Transform.html#update">Transform#update</a> if <a href="Transform.html#matrixNeedsUpdate">Transform#matrixNeedsUpdate</a> is true.Also recursively updates the bounds of this and the parent chain.
 </div>
 
 
@@ -2725,7 +2694,7 @@ Also recursively updates the bounds of this and the parent chain.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="camera.js.html">camera.js</a>, <a href="camera.js.html#line90">line 90</a>
+        <a href="camera.js.html">camera.js</a>, <a href="camera.js.html#line92">line 92</a>
     </li></ul></dd>
     
 
@@ -2809,7 +2778,7 @@ Also recursively updates the bounds of this and the parent chain.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="camera.js.html">camera.js</a>, <a href="camera.js.html#line80">line 80</a>
+        <a href="camera.js.html">camera.js</a>, <a href="camera.js.html#line82">line 82</a>
     </li></ul></dd>
     
 
@@ -2896,7 +2865,7 @@ Also recursively updates the bounds of this and the parent chain.
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Jan 15 2019 09:38:45 GMT+0200 (EET) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Feb 21 2019 13:52:20 GMT+0200 (FLE Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

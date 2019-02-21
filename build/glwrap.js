@@ -1260,7 +1260,7 @@ var glwrap = (function (exports) {
         cam.setActive(gl);
 
         for (var i = 0; i < this.transforms.length; i++) {
-          this.transforms[i].draw(gl, cam.viewProjectionMatrix);
+          this.transforms[i].draw(gl, cam);
         }
       }
     }]);
@@ -1997,13 +1997,12 @@ var glwrap = (function (exports) {
       /**
        * @description main method to draw this.mesh. binds the shaderprogram and assigns uniforms to it.
        * @param {WebglRenderingContext} gl gl context
-       * @param {Float32Array} viewMatrix viewMatrix to be used by the shaderProgram. if null then identity matrix is used
-       * @param {Float32Array} projectionMatrix projection matrix to be used by the shader program. if null identity matrix is used
+       * @param {Camera} viewMatrix camera that is used to get view and projection
        */
 
     }, {
       key: "draw",
-      value: function draw(gl, viewProjectionMatrix) {
+      value: function draw(gl, camera) {
         if (!this.visible) {
           return;
         }
@@ -2018,7 +2017,7 @@ var glwrap = (function (exports) {
 
         this.onBeforeDraw();
         this.program.use(gl);
-        this.program.setUniform(gl, 'viewProjectionMatrix', 'm4', viewProjectionMatrix.data);
+        this.program.setUniform(gl, 'viewProjectionMatrix', 'm4', camera.viewProjectionMatrix.data);
         this.program.setUniform(gl, 'modelMatrix', 'm4', this.localToWorld.data);
 
         for (var name in this.uniforms) {
@@ -2225,6 +2224,15 @@ var glwrap = (function (exports) {
       },
       set: function set(value) {
         this._near = value;
+        this.projectionNeedsUpdate = true;
+      }
+    }, {
+      key: "far",
+      get: function get$$1() {
+        return this._far;
+      },
+      set: function set(value) {
+        this._far = value;
         this.projectionNeedsUpdate = true;
       }
     }, {
